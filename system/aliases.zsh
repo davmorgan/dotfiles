@@ -24,3 +24,11 @@ alias psr='ps aux | grep ruby'
 
 # Copy Public Key to Clipboard
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
+# Common shell functions
+alias less='less -mr'
+alias tf='tail -f'
+alias l='less'
+alias lh='ls -alt | head' # see the last modified files
+alias screen='TERM=screen screen'
+alias cl='clear'

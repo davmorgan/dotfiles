@@ -9,8 +9,13 @@ export EDITOR='/usr/bin/vim'
 export VISUAL=$EDITOR
 export PAGER='less -m'
 
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;33'
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
+
+# No Core Dumps for me
+ulimit -c 0
 
 if [ -e /usr/share/terminfo/78/xterm-256color ]; then
   export TERM='xterm-256color'
