@@ -28,14 +28,18 @@ end
 
 desc "Setup Git Config"
 task :gitconfig do
+
+  run %{ls git/gitconfig.symlink}
+  unless $?.success?
     printf "Enter Git Author Name: "
     git_author_name = STDIN.gets.chomp
     printf "Enter Git Author Email: "
     git_author_email = STDIN.gets.chomp
+  end
 
-    run %{
-      sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink
-    }
+  run %{
+    sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink
+  }
 end
 
 task :submodule_init do
