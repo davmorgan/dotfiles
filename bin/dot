@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-# Set OS X defaults
-$ZSH/osx/set-defaults.sh
-
-# Upgrade homebrew
-brew update

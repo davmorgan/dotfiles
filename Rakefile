@@ -11,9 +11,7 @@ task :install => [:submodule_init, :submodules] do
   Rake::Task['pathogen'].invoke
 
   file_operation(Dir.glob('git/**/*.symlink'))
-  file_operation(Dir.glob('irb/**/*.symlink'))
   file_operation(Dir.glob('ruby/**/*.symlink'))
-  file_operation(Dir.glob('ctags/**/*.symlink'))
   file_operation(Dir.glob('system/**/*.symlink'))
   file_operation(Dir.glob('zsh/**/*.symlink'))
   dir_operation(Dir.glob('functions'))
