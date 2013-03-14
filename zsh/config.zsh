@@ -4,6 +4,11 @@ else
   export PS1='%3~$(git_info_for_prompt)%# '
 fi
 
+# Setup EDITOR/VISUAL/PAGER
+export EDITOR='/usr/bin/vim'
+export VISUAL=$EDITOR
+export PAGER='less -m'
+
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
 
