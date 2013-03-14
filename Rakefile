@@ -28,36 +28,34 @@ end
 
 desc "Setup Git Config"
 task :gitconfig do
-
-  run %{ls git/gitconfig.symlink}
-  unless $?.success?
+  unless File.exist?("git/gitconfig.symlink")
     printf "Enter Git Author Name: "
     git_author_name = STDIN.gets.chomp
     printf "Enter Git Author Email: "
     git_author_email = STDIN.gets.chomp
-  end
 
-  run %{
-    sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink
-  }
+    run %{
+      sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink
+    }
+  end
 end
 
 task :submodule_init do
-  run %{ git submodule update --init --recursive }
+  run %{ git submodule update --init --recursive 2>&1 }
 end
 
 desc "Init and update submodules."
 task :submodules do
     run %{
-      cd $HOME/.dotfiles
-      git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx'
-      git clean -dfx
+      cd $HOME/.dotfiles 2>&1
+      git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
+      git clean -dfx 2>&1
     }
 end
 
 private
 def run(cmd)
-  puts "[Running] #{cmd}"
+  puts "[\e[38;5;136mRunning\e[0m] #{cmd}"
   `#{cmd}` unless ENV['DEBUG']
 end
 
@@ -82,7 +80,7 @@ def file_operation(files)
     target = "#{ENV["HOME"]}/.#{file}"
 
     if File.exists?(target) || File.symlink?(target)
-      puts "[Backup] #{target} to #{target}.backup"
+      puts "[\e[0;31mBackup \e[0m] #{target} to #{target}.backup"
       run %{ mv "$HOME/.#{file}" "$HOME/.#{file}.backup" }
     end
 
@@ -91,16 +89,15 @@ def file_operation(files)
 end
 
 def dir_operation(dir)
-  source = "#{ENV["PWD"]}/#{dir}"
-  target = "#{ENV["HOME"]}/#{dir}"
+  dir.each do |d|
+    source = "#{ENV["PWD"]}/#{d}"
+    target = "#{ENV["HOME"]}/#{d}"
 
-  puts "Source: #{source}"
-  puts "Target: #{target}"
+    if File.exists?(target) || File.symlink?(target)
+      puts "[\e[0;31mBackup \e[0m] #{target} to #{target}.backup"
+      run %{ mv "$HOME/#{d}" "$HOME/#{d}.backup" }
+    end
 
-  if File.exists?(target) || File.symlink?(target)
-    puts "[Overwriting] #{target}...leaving original at #{target}.backup..."
-    run %{ mv "$HOME/#{dir}" "$HOME/#{dir}.backup" }
+    run %{ ln -nfs "#{source}" "#{target}" }
   end
-
-  run %{ ln -nfs "#{source}" "#{target}" }
 end
