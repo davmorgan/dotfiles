@@ -8,7 +8,6 @@ export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
 
 if [ -e /usr/share/terminfo/78/xterm-256color ]; then
-  # Ensure the terminal is running in 256 color mode
   export TERM='xterm-256color'
 fi
 
@@ -16,13 +15,12 @@ fpath=($ZSH/functions $fpath)
 
 autoload -U $ZSH/functions/*(:t)
 
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export HISTCONTROL=erasedups
+export HISTTIMEFORMAT='%F %T '
+export SAVEHIST=10000
 
-setopt NO_BG_NICE # don't nice background tasks
-setopt NO_HUP
-setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
 setopt HIST_VERIFY
@@ -41,13 +39,3 @@ setopt HIST_REDUCE_BLANKS
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
 setopt complete_aliases
-
-zle -N newtab
-
-bindkey '^[^[[D' backward-word
-bindkey '^[^[[C' forward-word
-bindkey '^[[5D' beginning-of-line
-bindkey '^[[5C' end-of-line
-bindkey '^[[3~' delete-char
-bindkey '^[^N' newtab
-bindkey '^?' backward-delete-char
