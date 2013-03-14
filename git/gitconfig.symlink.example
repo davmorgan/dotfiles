@@ -1,0 +1,44 @@
+[hub]
+  protocol = https
+[user]
+  name = GIT_AUTHOR_NAME
+  email = GIT_AUTHOR_EMAIL
+  helper = osxkeychain
+[color]
+  status = auto
+  ui = auto
+  branch = auto
+  diff = auto
+[pack]
+  threads = 0
+[core]
+  editor = /usr/bin/vim
+  compression = 9
+  preloadindex = true
+  excludesfile = ~/.gitignore
+[credential]
+  helper = osxkeychain
+[branch]
+  autosetupmerge = true
+[push]
+  default = simple
+[difftool "Kaleidoscope"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+  tool = Kaleidoscope
+[difftool]
+  prompt = false
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustExitCode = true
+[mergetool]
+  prompt = false
+  keepBackup = false
+[merge]
+  tool = Kaleidoscope
+[alias]
+  co = checkout
+  promote = !$ZSH/bin/git-promote
+  wtf     = !$ZSH/bin/git-wtf
+  rank-contributers = !$ZSH/bin/git-rank-contributers
+  count   = !git shortlog -sn
