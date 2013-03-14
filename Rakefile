@@ -23,20 +23,23 @@ end
 
 desc "Update Pathogen"
 task :pathogen do
-  run %{curl -Sso .vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim}
+  run %{ curl -Sso .vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim }
+end
+
+task :cwd do
+  puts Dir.pwd
 end
 
 desc "Setup Git Config"
 task :gitconfig do
-  unless File.exist?("git/gitconfig.symlink")
+  unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
+    puts "gitconfig Does Not Exists"
     printf "Enter Git Author Name: "
     git_author_name = STDIN.gets.chomp
     printf "Enter Git Author Email: "
     git_author_email = STDIN.gets.chomp
 
-    run %{
-      sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink
-    }
+    run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
   end
 end
 
@@ -46,11 +49,9 @@ end
 
 desc "Init and update submodules."
 task :submodules do
-    run %{
-      cd $HOME/.dotfiles 2>&1
-      git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
-      git clean -dfx 2>&1
-    }
+    run %{ cd $HOME/.dotfiles 2>&1
+           git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
+           git clean -dfx 2>&1 }
 end
 
 private
@@ -62,10 +63,10 @@ end
 def install_homebrew
   run %{which brew}
   unless $?.success?
-    run %{ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"}
+    run %{ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)" }
   end
 
-  run %{brew install ack ctags git hub grc coreutils spark nmap bash-completion tmux fping proctools wget}
+  run %{ brew install ack ctags git hub grc coreutils spark nmap bash-completion tmux fping proctools wget}
 end
 
 def install_fonts
@@ -80,7 +81,7 @@ def file_operation(files)
     target = "#{ENV["HOME"]}/.#{file}"
 
     if File.exists?(target) || File.symlink?(target)
-      puts "[\e[0;31mBackup \e[0m] #{target} to #{target}.backup"
+      puts "[\e[0;31mBackup \e[0m]  #{target}"
       run %{ mv "$HOME/.#{file}" "$HOME/.#{file}.backup" }
     end
 
@@ -92,12 +93,6 @@ def dir_operation(dir)
   dir.each do |d|
     source = "#{ENV["PWD"]}/#{d}"
     target = "#{ENV["HOME"]}/#{d}"
-
-    if File.exists?(target) || File.symlink?(target)
-      puts "[\e[0;31mBackup \e[0m] #{target} to #{target}.backup"
-      run %{ mv "$HOME/#{d}" "$HOME/#{d}.backup" }
-    end
-
     run %{ ln -nfs "#{source}" "#{target}" }
   end
 end
