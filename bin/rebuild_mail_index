@@ -9,5 +9,3 @@ AFTER=`ls -lah $mail_data_dir | grep -E 'Envelope Index$' | awk '{ print $5}'`
 echo "before: $BEFORE"
 echo "after:  $AFTER"
 open -a "Mail.app"
-
-/usr/bin/osascript -e 'tell application "Mail" to display dialog "Envelope Index before: " & "'$BEFORE'" & return & "Envelope Index after: " & "'$AFTER'"'
