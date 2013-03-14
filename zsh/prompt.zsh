@@ -1,8 +1,1 @@
-autoload -U colors && colors
-
-if (( $+commands[git] ))
-then
-  git="$commands[git]"
-else
-  git="/usr/bin/git"
-fi
+PROMPT='[%{$fg[blue]%}%n%{$reset_color%}@%{$fg[yellow]%}%m%{$reset_color%} %{$fg[green]%}${PWD/#$HOME/~}%b%{$reset_color%}]\$ '
