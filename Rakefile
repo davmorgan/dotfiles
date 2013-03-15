@@ -14,7 +14,6 @@ task :install => [:submodule_init, :submodules] do
   file_operation(Dir.glob('ruby/**/*.symlink'))
   file_operation(Dir.glob('system/**/*.symlink'))
   file_operation(Dir.glob('zsh/**/*.symlink'))
-  dir_operation(Dir.glob('functions'))
   dir_operation(Dir.glob('bin'))
   dir_operation(Dir.glob('.vim'))
 end
@@ -91,6 +90,12 @@ def dir_operation(dir)
   dir.each do |d|
     source = "#{ENV["PWD"]}/#{d}"
     target = "#{ENV["HOME"]}/#{d}"
+
+    if File.directory?(target)
+      puts "[\e[0;31mBackup \e[0m]  #{target}"
+      run %{ mv "$HOME/#{d}" "$HOME/#{d}.backup" }
+    end
+
     run %{ ln -nfs "#{source}" "#{target}" }
   end
 end
