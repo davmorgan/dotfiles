@@ -5,3 +5,4 @@
 *.rbc
 git/gitconfig.symlink
 TAGS
+.vim/.netrwhist
