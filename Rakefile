@@ -10,6 +10,7 @@ task :install => [:submodule_init, :submodules] do
   Rake::Task['gitconfig'].invoke
   Rake::Task['pathogen'].invoke
 
+  puts "\n === [\e[0;37mBootstrap Dotfiles\e[0m] ==="
   file_operation(Dir.glob('git/**/*.symlink'))
   file_operation(Dir.glob('ruby/**/*.symlink'))
   file_operation(Dir.glob('system/**/*.symlink'))
@@ -26,6 +27,7 @@ end
 
 desc "Update Dotfiles"
 task :update do
+  puts "\n === [\e[0;37mUpdating Dotfiles\e[0m] ==="
   run %{ git pull }
   Rake::Task['pathogen'].invoke
   puts "[\e[0;32mSuccess\e[0m] Dotfiles Updated! Please close all open terminals."
@@ -33,6 +35,7 @@ end
 
 desc "Update Pathogen"
 task :pathogen do
+  puts "\n === [\e[0;37mBootstrap Vim Pathogen\e[0m] ==="
   run %{ curl -Sso .vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim }
 end
 
@@ -42,6 +45,7 @@ end
 
 desc "Setup Git Config"
 task :gitconfig do
+  puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
   unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
     puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
     printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
@@ -54,6 +58,7 @@ task :gitconfig do
 end
 
 task :submodule_init do
+  puts "\n === [\e[0;37mBootstrap Submodules\e[0m] ==="
   run %{ git submodule update --init --recursive 2>&1 }
 end
 
@@ -71,6 +76,7 @@ def run(cmd)
 end
 
 def install_homebrew
+  puts "\n === [\e[0;37mBootstrap Homebrew\e[0m] ==="
   run %{ which brew }
   unless $?.success?
     run %{ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)" }
@@ -93,6 +99,7 @@ def install_packages
 end
 
 def install_fonts
+  puts "\n === [\e[0;37mBootstrap Fonts\e[0m] ==="
   run %{ cp -f $HOME/.dotfiles/fonts/* $HOME/Library/Fonts }
 end
 
@@ -127,6 +134,7 @@ def dir_operation(dir)
 end
 
 def change_shell
+  puts "\n === [\e[0;37mBootstrap Default Shell\e[0m] ==="
   if system('type -f /usr/local/bin/zsh')
     run %{ chsh -s /usr/local/bin/zsh }
     puts "[\e[0;35mChanged\e[0m]  Active ZSH Shell is: #{`which zsh`}"
