@@ -4,6 +4,9 @@ alias reload!='. ~/.zshrc'
 # Override rm -i alias which makes rm prompt for every action
 alias rm='nocorrect rm'
 
+# Let .. move us up one directory.
+alias ..='cd ..'
+
 # Show human friendly numbers and colors
 alias df='df -h'
 alias ll='ls -alGh'
