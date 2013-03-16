@@ -21,14 +21,14 @@ task :install => [:submodule_init, :submodules] do
   active_shell = %x(echo $SHELL)
   change_shell unless active_shell.include?("zsh")
 
-  puts "[\e[32mSuccess\e[0m] Dotfiles Installed! Please close all open terminals."
+  puts "[\e[0;32mSuccess\e[0m] Dotfiles Installed! Please close all open terminals."
 end
 
 desc "Update Dotfiles"
 task :update do
   run %{ git pull }
   Rake::Task['pathogen'].invoke
-  puts "[\e[32mSuccess\e[0m] Dotfiles Updated! Please close all open terminals."
+  puts "[\e[0;32mSuccess\e[0m] Dotfiles Updated! Please close all open terminals."
 end
 
 desc "Update Pathogen"
@@ -43,7 +43,6 @@ end
 desc "Setup Git Config"
 task :gitconfig do
   unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
-    puts "gitconfig Does Not Exists"
     printf "Enter Git Author Name: "
     git_author_name = STDIN.gets.chomp
     printf "Enter Git Author Email: "
@@ -66,12 +65,12 @@ end
 
 private
 def run(cmd)
-  puts "[\e[38;5;136mRunning\e[0m] #{cmd}"
+  puts "[\e[0;33mRunning\e[0m] #{cmd}"
   `#{cmd}` unless ENV['DEBUG']
 end
 
 def install_homebrew
-  run %{which brew}
+  run %{ which brew }
   unless $?.success?
     run %{ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)" }
   end
@@ -80,7 +79,16 @@ def install_homebrew
 end
 
 def install_packages
-  run %{ brew install ack ctags git hub grc coreutils spark nmap bash-completion tmux fping proctools wget}
+  pkgs = [ "ack", "ctags", "git", "hub", "grc", "coreutils", "spark", "nmap", "tmux", "fping", "proctools", "wget" ]
+
+  pkgs.each do |p|
+    if system("brew list | grep #{p} > /dev/null")
+      puts "[\e[0;36mNotice \e[0m] Package: #{p} already installed."
+    else
+      puts "[\e[0;36mNotice \e[0m] Installing Package: #{p}."
+      run %{ brew install #{p} }
+    end
+  end
 end
 
 def install_fonts
@@ -120,9 +128,9 @@ end
 def change_shell
   if system('type -f /usr/local/bin/zsh')
     run %{ chsh -s /usr/local/bin/zsh }
-    puts "[\e[32mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
+    puts "[\e[0;35mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
   else
     run %{ chsh -s /bin/zsh }
-    puts "[\e[32mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
+    puts "[\e[0;35mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
   end
 end
