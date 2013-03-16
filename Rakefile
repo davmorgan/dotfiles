@@ -40,10 +40,6 @@ task :pathogen do
   run %{ curl -Sso .vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim }
 end
 
-task :cwd do
-  puts Dir.pwd
-end
-
 desc "Setup Git Config"
 task :gitconfig do
   puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
