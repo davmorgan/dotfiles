@@ -54,12 +54,13 @@ task :gitconfig do
   end
 end
 
+desc "Initialize Submodules"
 task :submodule_init do
   puts "\n === [\e[0;37mBootstrap Submodules\e[0m] ==="
   run %{ git submodule update --init --recursive 2>&1 }
 end
 
-desc "Init and update submodules."
+desc "Update Submodules"
 task :submodules do
     run %{ cd $HOME/.dotfiles 2>&1
            git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
