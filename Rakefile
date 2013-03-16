@@ -43,9 +43,10 @@ end
 desc "Setup Git Config"
 task :gitconfig do
   unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
-    printf "Enter Git Author Name: "
+    puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
+    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
     git_author_name = STDIN.gets.chomp
-    printf "Enter Git Author Email: "
+    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
     git_author_email = STDIN.gets.chomp
 
     run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
@@ -83,9 +84,9 @@ def install_packages
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")
-      puts "[\e[0;36mNotice \e[0m] Package: #{p} already installed."
+      puts "[\e[0;36mNotice \e[0m]  Package: #{p} already installed."
     else
-      puts "[\e[0;36mNotice \e[0m] Installing Package: #{p}."
+      puts "[\e[0;36mNotice \e[0m]  Installing Package: #{p}."
       run %{ brew install #{p} }
     end
   end
@@ -128,9 +129,9 @@ end
 def change_shell
   if system('type -f /usr/local/bin/zsh')
     run %{ chsh -s /usr/local/bin/zsh }
-    puts "[\e[0;35mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
+    puts "[\e[0;35mChanged\e[0m]  Active ZSH Shell is: #{`which zsh`}"
   else
     run %{ chsh -s /bin/zsh }
-    puts "[\e[0;35mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
+    puts "[\e[0;35mChanged\e[0m]  Active ZSH Shell is: #{`which zsh`}"
   end
 end
