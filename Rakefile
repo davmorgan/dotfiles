@@ -6,6 +6,7 @@ desc "Install Dotfiles"
 task :install => [:submodule_init, :submodules] do
   install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
   install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
+  osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
 
   Rake::Task['gitconfig'].invoke
   Rake::Task['pathogen'].invoke
@@ -101,6 +102,11 @@ end
 def install_fonts
   puts "\n === [\e[0;37mBootstrap Fonts\e[0m] ==="
   run %{ cp -f $HOME/.dotfiles/fonts/* $HOME/Library/Fonts }
+end
+
+def osx_defaults
+  puts "\n === [\e[0;37mBootstrap OS X\e[0m] ==="
+  run %{ $HOME/.dotfiles/bin/osx-defaults }
 end
 
 def file_operation(files)
