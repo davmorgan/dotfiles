@@ -17,21 +17,18 @@ task :install => [:submodule_init, :submodules] do
   dir_operation(Dir.glob('bin'))
   dir_operation(Dir.glob('.vim'))
 
-  if system('type -f /usr/local/bin/zsh')
-    run %{ chsh -s /usr/local/bin/zsh }
-  else
-    run %{ chsh -s /bin/zsh }
-  end
+  # Get the Active Shell and Update Not ZSH
+  active_shell = %x(echo $SHELL)
+  change_shell unless active_shell.include?("zsh")
 
-  puts "[\e[32mCompleted\e[0m] Dotfiles Installed!."
-  puts "[\e[32mCompleted\e[0m] Active ZSH Shell is: #{`which zsh`}"
+  puts "[\e[32mSuccess\e[0m] Dotfiles Installed! Please close all open terminals."
 end
 
 desc "Update Dotfiles"
 task :update do
   run %{ git pull }
   Rake::Task['pathogen'].invoke
-  puts "[\e[32mCompleted\e[0m] Dotfiles Updated! Please close all open terminals."
+  puts "[\e[32mSuccess\e[0m] Dotfiles Updated! Please close all open terminals."
 end
 
 desc "Update Pathogen"
@@ -117,5 +114,15 @@ def dir_operation(dir)
     end
 
     run %{ ln -nfs "#{source}" "#{target}" }
+  end
+end
+
+def change_shell
+  if system('type -f /usr/local/bin/zsh')
+    run %{ chsh -s /usr/local/bin/zsh }
+    puts "[\e[32mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
+  else
+    run %{ chsh -s /bin/zsh }
+    puts "[\e[32mChanged\e[0m] Active ZSH Shell is: #{`which zsh`}"
   end
 end
