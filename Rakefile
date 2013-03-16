@@ -2,7 +2,7 @@ require 'rake'
 
 task :default => [:install]
 
-desc "Deploy Dotfiles"
+desc "Install Dotfiles"
 task :install => [:submodule_init, :submodules] do
   install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
   install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
@@ -16,6 +16,22 @@ task :install => [:submodule_init, :submodules] do
   file_operation(Dir.glob('zsh/**/*.symlink'))
   dir_operation(Dir.glob('bin'))
   dir_operation(Dir.glob('.vim'))
+
+  if system('type -f /usr/local/bin/zsh')
+    run %{ chsh -s /usr/local/bin/zsh }
+  else
+    run %{ chsh -s /bin/zsh }
+  end
+
+  puts "[\e[32mCompleted\e[0m] Dotfiles Installed!."
+  puts "[\e[32mCompleted\e[0m] Active ZSH Shell is: #{`which zsh`}"
+end
+
+desc "Update Dotfiles"
+task :update do
+  run %{ git pull }
+  Rake::Task['pathogen'].invoke
+  puts "[\e[32mCompleted\e[0m] Dotfiles Updated! Please close all open terminals."
 end
 
 desc "Update Pathogen"
@@ -63,6 +79,10 @@ def install_homebrew
     run %{ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)" }
   end
 
+  install_packages
+end
+
+def install_packages
   run %{ brew install ack ctags git hub grc coreutils spark nmap bash-completion tmux fping proctools wget}
 end
 
