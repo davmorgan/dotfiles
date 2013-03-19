@@ -62,9 +62,9 @@ end
 
 desc "Update Submodules"
 task :submodules do
-    run %{ cd $HOME/.dotfiles 2>&1
-           git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
-           git clean -dfx 2>&1 }
+  run %{ cd $HOME/.dotfiles 2>&1
+         git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
+         git clean -dfx 2>&1 }
 end
 
 private
