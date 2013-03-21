@@ -84,7 +84,7 @@ def install_homebrew
 end
 
 def install_packages
-  pkgs = [ "ack", "ctags", "git", "hub", "grc", "coreutils", "spark", "nmap", "tmux", "fping", "proctools", "wget" ]
+  pkgs = [ "ack", "ctags", "git", "hub", "grc", "coreutils", "spark", "nmap", "tmux", "fping", "proctools", "wget", "mtr" ]
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")
