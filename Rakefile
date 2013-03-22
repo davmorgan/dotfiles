@@ -95,6 +95,11 @@ def install_packages
   end
 end
 
+def install_fonts
+  puts "\n === [\e[0;37mBootstrap Fonts\e[0m] ==="
+  run %{ cp -f $HOME/.dotfiles/fonts/* $HOME/Library/Fonts }
+end
+
 def osx_defaults
   puts "\n === [\e[0;37mBootstrap OS X\e[0m] ==="
   run %{ $HOME/.dotfiles/bin/osx-defaults }
