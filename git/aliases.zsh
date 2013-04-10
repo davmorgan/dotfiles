@@ -11,3 +11,4 @@ alias gco='git checkout'
 alias gb='git branch'
 alias gs='git status -sb'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gitk="/usr/bin/wish $(which gitk)"

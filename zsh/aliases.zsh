@@ -21,7 +21,7 @@ alias nx='ssh -ladmin'
 
 # Netstat
 alias ns='netstat -lant'
-alias nsl='netstat -lant | grep LISTEN'
+alias listen='netstat -lant | grep LISTEN'
 
 # Cisco Console using only Screen
 alias con='screen /dev/tty.KeySerial1'
