@@ -43,5 +43,5 @@ alias screen='TERM=screen screen'
 alias cl='clear'
 
 # Sublime Text
-alias s3='/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl'
-alias s2='/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl'
+alias s3='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+alias s2='/Applications/Sublime\ Text 2.app/Contents/SharedSupport/bin/subl'
