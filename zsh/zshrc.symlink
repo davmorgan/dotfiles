@@ -39,3 +39,6 @@ do
 done
 
 unset config_files
+
+# Lets load up our rbenv environment
+eval "$(rbenv init -)"

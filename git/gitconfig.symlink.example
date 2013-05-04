@@ -15,7 +15,7 @@
   editor = /usr/bin/vim
   compression = 9
   preloadindex = true
-  excludesfile = ~/.gitignore
+  excludesfile = /Users/rovalent/.gitignore
 [credential]
   helper = osxkeychain
 [branch]
