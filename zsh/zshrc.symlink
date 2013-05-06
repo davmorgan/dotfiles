@@ -40,5 +40,8 @@ done
 
 unset config_files
 
+# Setup Python Environment
+export PYTHONPATH=\"$(brew --prefix)/lib/python2.7/site-packages:\$PYTHONPATH\"
+
 # Lets load up our rbenv environment
 eval "$(rbenv init -)"
