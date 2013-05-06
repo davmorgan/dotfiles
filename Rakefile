@@ -6,6 +6,7 @@ desc "Install Dotfiles"
 task :install => [:submodule_init, :submodules] do
   install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
   osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
+  install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
 
   Rake::Task['gitconfig'].invoke
   Rake::Task['pathogen'].invoke
