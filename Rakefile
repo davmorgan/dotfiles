@@ -3,7 +3,7 @@ require 'rake'
 task :default => [:install]
 
 desc "Install Dotfiles"
-task :install => [:submodule_init, :submodules] do
+task :install => [:pull, :submodule_init, :submodules] do
   install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
   osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
   install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
@@ -26,12 +26,10 @@ task :install => [:submodule_init, :submodules] do
   puts "[\e[0;32mSuccess\e[0m] Dotfiles Installed! Please close all open terminals."
 end
 
-desc "Update Dotfiles"
-task :update do
+desc "Pull Latest Dotfiles"
+task :pull do
   puts "\n === [\e[0;37mUpdating Dotfiles\e[0m] ==="
   run %{ git pull }
-  Rake::Task['pathogen'].invoke
-  puts "[\e[0;32mSuccess\e[0m] Dotfiles Updated! Please close all open terminals."
 end
 
 desc "Update Pathogen"
