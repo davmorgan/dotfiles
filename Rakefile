@@ -82,7 +82,7 @@ def install_homebrew
 end
 
 def install_packages
-  pkgs = [ "ack", "bash-completion", "git", "spark", "fping", "wget", "rbenv", "ruby-build" ]
+  pkgs = [ "ack", "bash-completion", "libyaml", "git", "spark", "fping", "wget", "rbenv", "ruby-build" ]
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")
