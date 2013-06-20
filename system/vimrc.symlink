@@ -124,6 +124,12 @@ map 0 ^
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_enable_signs=1
+let g:syntastic_quiet_warnings=1
+let g:syntastic_auto_loc_list=1
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
