@@ -3,13 +3,12 @@ require 'rake'
 task :default => [:install]
 
 desc "Install Dotfiles"
-task :install => [:pull, :submodule_init, :submodules] do
-  install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
-  osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
-  install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
-
-  Rake::Task['gitconfig'].invoke
-  Rake::Task['pathogen'].invoke
+task :install => :pull do
+  Rake::Task['install:packages'].invoke
+  Rake::Task['install:fonts'].invoke
+  Rake::Task['setup:gitconfig'].invoke
+  Rake::Task['setup:vundle'].invoke
+  Rake::Task['setup:osx'].invoke
 
   puts "\n === [\e[0;37mBootstrap Dotfiles\e[0m] ==="
   file_operation(Dir.glob('git/**/*.symlink'))
@@ -17,11 +16,12 @@ task :install => [:pull, :submodule_init, :submodules] do
   file_operation(Dir.glob('system/**/*.symlink'))
   file_operation(Dir.glob('zsh/**/*.symlink'))
   dir_operation(Dir.glob('bin'))
-  dir_operation(Dir.glob('.vim'))
 
   # Get the Active Shell and Update Not ZSH
   active_shell = %x(echo $SHELL)
   change_shell unless active_shell.include?("zsh")
+
+  Rake::Task['install:vundle'].invoke
 
   puts "[\e[0;32mSuccess\e[0m] Dotfiles Installed! Please close all open terminals."
 end
@@ -32,37 +32,57 @@ task :pull do
   run %{ git pull }
 end
 
-desc "Update Pathogen"
-task :pathogen do
-  puts "\n === [\e[0;37mBootstrap Vim Pathogen\e[0m] ==="
-  run %{ curl -Sso .vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim }
-end
+namespace :setup do
 
-desc "Setup Git Config"
-task :gitconfig do
-  puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
-  unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
-    puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
-    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
-    git_author_name = STDIN.gets.chomp
-    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
-    git_author_email = STDIN.gets.chomp
+  desc "Setup Git Config"
+  task :gitconfig do
+    puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
+    unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
+      puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
+      printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
+      git_author_name = STDIN.gets.chomp
+      printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
+      git_author_email = STDIN.gets.chomp
 
-    run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
+      run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
+    end
   end
+
+  desc "Setup Vundle"
+  task :vundle do
+    run %{ mkdir -p ~/.vim/bundle/ }
+    run %{ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle }
+  end
+
+  desc "Setup OSX Defaults"
+  task :osx do
+    osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
+  end
+
 end
 
-desc "Initialize Submodules"
-task :submodule_init do
-  puts "\n === [\e[0;37mBootstrap Submodules\e[0m] ==="
-  run %{ git submodule update --init --recursive 2>&1 }
-end
+namespace :install do
 
-desc "Update Submodules"
-task :submodules do
-  run %{ cd $HOME/.dotfiles 2>&1
-         git submodule foreach 'git fetch origin; git checkout master; git reset --hard origin/master; git submodule update --recursive; git clean -dfx' 2>&1
-         git clean -dfx 2>&1 }
+  desc "Install Homebrew"
+  task :homebrew do
+    install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
+  end
+
+  desc "Install Homebrew Package"
+  task :packages => :homebrew do
+    install_packages if RUBY_PLATFORM.downcase.include?("darwin")
+  end
+
+  desc "Install Fonts"
+  task :fonts do
+    install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
+  end
+
+  desc "Install All VIM Bundles"
+  task :vundle do
+    run %{ vim +BundleInstall +qall }
+  end
+
 end
 
 private
@@ -75,14 +95,12 @@ def install_homebrew
   puts "\n === [\e[0;37mBootstrap Homebrew\e[0m] ==="
   run %{ which brew }
   unless $?.success?
-    run %{ ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)" }
+    run %{ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)" }
   end
-
-  install_packages
 end
 
 def install_packages
-pkgs = [ "ack", "bash-completion", "libyaml", "git", "spark", "mobile-shell", "fping", "wget", "rbenv", "ruby-build" ]
+pkgs = [ "ack", "bash-completion", "libyaml", "git", "spark", "mobile-shell", "fping", "wget", "rbenv", "ruby-build", "vim" ]
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")

@@ -1,14 +1,27 @@
-set nocompatible
+set nocompatible               " be iMproved
+filetype off                   " required!
 
-call pathogen#infect()
-call pathogen#helptags()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-fugitive'
+Bundle 'garbas/vim-snipmate'
+Bundle 'rodjek/vim-puppet'
+Bundle 'PProvost/vim-ps1'
+Bundle 'tpope/vim-markdown'
+Bundle 'godlygeek/tabular'
+Bundle 'scrooloose/syntastic'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'scrooloose/nerdtree'
+Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+
+filetype plugin indent on     " required!
 
 " Sets how many lines of history VIM has to remember
 set history=1000
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 set autoread
 
@@ -71,10 +84,8 @@ set tm=500
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
-set background=dark
-set t_Co=256
-let g:solarized_termcolors=256
-colorscheme solarized
+" set background=dark
+" set t_Co=256
 
 " GUI options that need to be set here first
 " Remove exta, useless button bar.
