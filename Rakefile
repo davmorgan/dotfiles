@@ -7,7 +7,6 @@ task :install => :pull do
   Rake::Task['install:packages'].invoke
   Rake::Task['install:fonts'].invoke
   Rake::Task['setup:gitconfig'].invoke
-  Rake::Task['setup:vundle'].invoke
   Rake::Task['setup:osx'].invoke
 
   puts "\n === [\e[0;37mBootstrap Dotfiles\e[0m] ==="
@@ -37,19 +36,18 @@ namespace :setup do
   desc "Setup Git Config"
   task :gitconfig do
     puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
-    unless File.exist?("#{Dir.pwd}/git/gitconfig.symlink")
-      puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
-      printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
-      git_author_name = STDIN.gets.chomp
-      printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
-      git_author_email = STDIN.gets.chomp
+    puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
+    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
+    git_author_name = STDIN.gets.chomp
+    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
+    git_author_email = STDIN.gets.chomp
 
-      run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
-    end
+    run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
   end
 
   desc "Setup Vundle"
   task :vundle do
+    puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
     run %{ mkdir -p ~/.vim/bundle/ }
     run %{ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle }
   end
@@ -57,6 +55,16 @@ namespace :setup do
   desc "Setup OSX Defaults"
   task :osx do
     osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
+  end
+
+end
+
+namespace :update do
+
+  desc "Setup Vundle"
+  task :vundle do
+    puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
+    run %{ cd ~/.vim/bundle/vundle && git pull }
   end
 
 end
