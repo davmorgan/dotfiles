@@ -17,6 +17,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'jelera/vim-gummybears-colorscheme'
 
 filetype plugin indent on     " required!
 
@@ -84,8 +85,8 @@ set tm=500
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
-" set background=dark
-" set t_Co=256
+set t_Co=256
+colorscheme gummybears
 
 " GUI options that need to be set here first
 " Remove exta, useless button bar.
