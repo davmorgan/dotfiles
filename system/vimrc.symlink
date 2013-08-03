@@ -10,9 +10,10 @@ Bundle 'gmarik/vundle'
 
 ""
 " Packages
-Bundle "tlib"
-Bundle 'tpope/vim-fugitive'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
 Bundle 'garbas/vim-snipmate'
+Bundle 'tpope/vim-fugitive'
 Bundle 'rodjek/vim-puppet'
 Bundle 'PProvost/vim-ps1'
 Bundle 'tpope/vim-markdown'
@@ -22,8 +23,8 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'jelera/vim-gummybears-colorscheme'
+Bundle 'honza/vim-snippets'
 
 filetype plugin indent on     " required!
 
