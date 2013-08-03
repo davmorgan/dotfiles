@@ -4,12 +4,12 @@ filetype off                   " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-##
-# Load Vundle First
+""
+" Load Vundle First
 Bundle 'gmarik/vundle'
 
-##
-# Packages
+""
+" Packages
 Bundle "tlib"
 Bundle 'tpope/vim-fugitive'
 Bundle 'garbas/vim-snipmate'
