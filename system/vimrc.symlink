@@ -25,6 +25,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'jelera/vim-gummybears-colorscheme'
 Bundle 'honza/vim-snippets'
+Bundle 'dagwieers/asciidoc-vim'
 
 filetype plugin indent on     " required!
 
