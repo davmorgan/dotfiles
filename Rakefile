@@ -7,7 +7,6 @@ task :install => :pull do
   Rake::Task['install:packages'].invoke
   Rake::Task['install:fonts'].invoke
   Rake::Task['setup:gitconfig'].invoke
-  Rake::Task['setup:osx'].invoke
 
   puts "\n === [\e[0;37mBootstrap Dotfiles\e[0m] ==="
   file_operation(Dir.glob('git/**/*.symlink'))
