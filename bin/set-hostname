@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+##
+# Local Variables
+local hostname
+
+##
+# Ask for password
+sudo -v
+
+##
+# Sudo Keep-alive
+# https://github.com/mathiasbynens/dotfiles/blob/master/.osx
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+##
+# Get Preferrecd Hostname
+vared -h -p "Hostname: " hostname
+
+##
+# Setup Hostname
+sudo scutil --set ComputerName $hostname
+sudo scutil --set HostName $hostname
+sudo scutil --set LocalHostName $hostname
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $hostname 
