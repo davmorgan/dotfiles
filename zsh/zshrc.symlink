@@ -46,3 +46,7 @@ export PYTHONPATH=\"$(brew --prefix)/lib/python2.7/site-packages:\$PYTHONPATH\"
 
 # Lets load up our rbenv environment
 eval "$(rbenv init -)"
+
+##
+# AsciiDoc Environment Setup
+export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
