@@ -48,5 +48,9 @@ export PYTHONPATH=\"$(brew --prefix)/lib/python2.7/site-packages:\$PYTHONPATH\"
 eval "$(rbenv init -)"
 
 ##
+# Setup JAVA_HOME
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+##
 # AsciiDoc Environment Setup
 export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
