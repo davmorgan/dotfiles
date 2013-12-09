@@ -1,0 +1,65 @@
+# ---------------------------------------------------------
+# Display the name of the home directory
+# ---------------------------------------------------------
+windowTitle    = "$TM_DISPLAYNAME - ${CWD/^.*\///}"
+
+# ---------------------------------------------------------
+# Exclude old *.tmproj files
+# ---------------------------------------------------------
+exclude        = "{$exclude,*.tmproj}"
+
+# ---------------------------------------------------------
+# Variables
+# ---------------------------------------------------------
+TM_FULLNAME     = "MY_NAME"
+TM_ORGANIZATION = "MY_ORG"
+TM_GIT          = "/usr/local/bin/git"
+TM_RUBY         = "/Users/USER_RUBY/.rbenv/shims/ruby"
+RBENV_VERSION   = "2.0.0-p353"
+PATH            = "/Users/USER_PATH/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+# ---------------------------------------------------------
+# General Settings
+# ---------------------------------------------------------
+showInvisibles = true
+spellChecking  = true
+fontName       = "Source Code Pro"
+fontSize       = 13
+tabSize        = 2
+softTabs       = true
+showWrapColumn = true
+
+[ text ]
+softWrap       = false
+wrapColumn     = 80
+softTabs       = true
+tabSize        = 2
+
+[ text.html.markdown ]
+softWrap       = true
+wrapColumn     = "Use Window Frame"
+softTabs       = false
+tabSize        = 4
+
+[ text.plain ]
+softWrap       = true
+wrapColumn     = "Use Window Frame"
+softTabs       = false
+tabSize        = 4
+
+[ source ]
+softWrap       = false
+wrapColumn     = 80
+softTabs       = true
+tabSize        = 2
+
+[ source.plist ]
+softTabs       = false
+tabSize        = 4
+
+[ source.tm-properties ]
+spellChecking  = false
+
+[ source.ruby ]
+softTabs         = true
+tabSize          = 2

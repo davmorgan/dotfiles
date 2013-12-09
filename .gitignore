@@ -4,6 +4,7 @@
 *.swp
 *.rbc
 git/gitconfig.symlink
+system/tm_properties.symlink
 TAGS
 .vim/.netrwhist
 .vim/.vim

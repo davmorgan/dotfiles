@@ -7,6 +7,7 @@ task :install => :pull do
   Rake::Task['install:packages'].invoke
   Rake::Task['install:fonts'].invoke
   Rake::Task['setup:gitconfig'].invoke
+  Rake::Task['setup:tmprop'].invoke
 
   puts "\n === [\e[0;37mBootstrap Dotfiles\e[0m] ==="
   file_operation(Dir.glob('git/**/*.symlink'))
@@ -33,19 +34,33 @@ task :pull do
 end
 
 namespace :setup do
-
+  
   desc "Setup Git Config"
   task :gitconfig do
-    puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
-
     gitcfg = "#{ENV["HOME"]}/.gitconfig"
-    if File.readlines(gitcfg).grep(/GIT_AUTHOR_NAME/).size > 0
+    unless File.exists?(gitcfg)
+      puts "\n === [\e[0;37mBootstraping #{gitcfg}\e[0m] ==="
       puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
       printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
       git_author_name = STDIN.gets.chomp
       printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
       git_author_email = STDIN.gets.chomp
       run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
+    else
+      puts "\n === [\e[0;33m #{gitcfg} exists\e[0m] ==="
+    end
+  end
+  
+  desc "Setup TM Properties Files"
+  task :tmprop do
+    tmprop = "#{ENV["HOME"]}/.tm_properties"
+    unless File.exists?(tmprop)
+      puts "\n === [\e[0;37mBootstraping #{tmprop}\e[0m] ==="
+      username = `whoami`
+      username.chop!
+      run %{ sed -e "s/USER_RUBY/#{username}/g" -e "s/USER_PATH/#{username}/g" system/tm_properties.symlink.example > system/tm_properties.symlink }
+    else
+      puts "\n === [\e[0;33m #{tmprop} exists\e[0m] ==="
     end
   end
 
