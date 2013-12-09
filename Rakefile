@@ -37,13 +37,16 @@ namespace :setup do
   desc "Setup Git Config"
   task :gitconfig do
     puts "\n === [\e[0;37mBootstrap Git Config\e[0m] ==="
-    puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
-    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
-    git_author_name = STDIN.gets.chomp
-    printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
-    git_author_email = STDIN.gets.chomp
 
-    run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
+    gitcfg = "#{ENV["HOME"]}/.gitconfig"
+    if File.readlines(gitcfg).grep(/GIT_AUTHOR_NAME/).size > 0
+      puts "[\e[0;34mConfig \e[0m]  $HOME/.gitconfig"
+      printf "[\e[0;34mConfig \e[0m]  Enter Git Author Name: "
+      git_author_name = STDIN.gets.chomp
+      printf "[\e[0;34mConfig \e[0m]  Enter Git Author Email: "
+      git_author_email = STDIN.gets.chomp
+      run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
+    end
   end
 
   desc "Setup OSX Defaults"
