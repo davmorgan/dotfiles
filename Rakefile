@@ -83,11 +83,14 @@ namespace :install do
     install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
   end
 
-  desc "Setup Vundle"
+  desc "Install Vundle"
   task :vundle do
     puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
     run %{ mkdir -p ~/.vim/bundle/ }
-    run %{ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle }
+    target = "~/.vim/bundle/vundle"
+    if File.directory?(target)
+      run %{ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle }
+    end
   end
 end
 
