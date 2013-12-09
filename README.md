@@ -2,7 +2,7 @@
 This repository is for my dotfiles. Feel free to pull and customize as you wish. Pull requests are welcome also!
 
 ## Installation
-Installation is quite easy, you just need to pull the repo and run rake.
+Installation is quite easy, you just need to pull the repo, run bundler, and then run rake.
 
 ```sh
 cd $HOME

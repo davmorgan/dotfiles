@@ -44,13 +44,6 @@ namespace :setup do
     run %{ sed -e "s/GIT_AUTHOR_NAME/#{git_author_name}/g" -e "s/GIT_AUTHOR_EMAIL/#{git_author_email}/g" git/gitconfig.symlink.example > git/gitconfig.symlink }
   end
 
-  desc "Setup Vundle"
-  task :vundle do
-    puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
-    run %{ mkdir -p ~/.vim/bundle/ }
-    run %{ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle }
-  end
-
   desc "Setup OSX Defaults"
   task :osx do
     osx_defaults if RUBY_PLATFORM.downcase.include?("darwin")
@@ -58,18 +51,20 @@ namespace :setup do
 
 end
 
-namespace :update do
-
-  desc "Setup Vundle"
-  task :vundle do
+namespace :vundle do
+  desc "Update Vundle"
+  task :update do
     puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
     run %{ cd ~/.vim/bundle/vundle && git pull }
   end
 
+  desc "Install All VIM Bundles"
+  task :pkgs do
+    run %{ vim +BundleInstall +qall }
+  end
 end
 
 namespace :install do
-
   desc "Install Homebrew"
   task :homebrew do
     install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
@@ -85,11 +80,12 @@ namespace :install do
     install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
   end
 
-  desc "Install All VIM Bundles"
+  desc "Setup Vundle"
   task :vundle do
-    run %{ vim +BundleInstall +qall }
+    puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
+    run %{ mkdir -p ~/.vim/bundle/ }
+    run %{ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle }
   end
-
 end
 
 private
