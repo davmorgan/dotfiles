@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 ""
-" Load Vundle First
+" Load Vundle First (REQUIRED!)
 Bundle 'gmarik/vundle'
 
 ""
@@ -23,7 +23,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'jelera/vim-gummybears-colorscheme'
+Bundle 'desert-warm-256'
 Bundle 'honza/vim-snippets'
 Bundle 'dagwieers/asciidoc-vim'
 Bundle 'chrisbra/color_highlight'
@@ -95,7 +95,7 @@ set tm=500
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
 set t_Co=256
-colorscheme gummybears
+colorscheme desert-warm-256
 
 " GUI options that need to be set here first
 " Remove exta, useless button bar.
