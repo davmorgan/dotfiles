@@ -20,6 +20,8 @@ task :install => :pull do
   change_shell unless active_shell.include?("zsh")
 
   Rake::Task['install:vundle'].invoke
+  Rake::Task['vundle:update'].invoke
+  Rake::Task['vundle:pkgs'].invoke
 
   puts "[\e[0;32mSuccess\e[0m] Dotfiles Installed! Please close all open terminals."
 end
@@ -54,12 +56,13 @@ end
 namespace :vundle do
   desc "Update Vundle"
   task :update do
-    puts "\n === [\e[0;37mBootstrap Vundle\e[0m] ==="
+    puts "\n === [\e[0;37mUpdate Vundle\e[0m] ==="
     run %{ cd ~/.vim/bundle/vundle && git pull }
   end
 
   desc "Install All VIM Bundles"
   task :pkgs do
+    puts "\n === [\e[0;37mInstall Vundle Pkgs\e[0m] ==="
     run %{ vim +BundleInstall +qall }
   end
 end
