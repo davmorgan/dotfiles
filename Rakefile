@@ -34,7 +34,7 @@ task :pull do
 end
 
 namespace :setup do
-  
+
   desc "Setup Git Config"
   task :gitconfig do
     gitcfg = "#{ENV["HOME"]}/.gitconfig"
@@ -50,7 +50,7 @@ namespace :setup do
       puts "\n === [\e[0;33m #{gitcfg} exists\e[0m] ==="
     end
   end
-  
+
   desc "Setup TM Properties Files"
   task :tmprop do
     tmprop = "#{ENV["HOME"]}/.tm_properties"
@@ -127,7 +127,7 @@ def install_homebrew
 end
 
 def install_packages
-pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "task", "git", "spark", "mobile-shell", "fping", "nmap", "wget", "rbenv", "ruby-build", "vim", "jshon", "openssl", "readline", "macvim" ]
+pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "task", "tmux", "git", "spark", "mobile-shell", "fping", "nmap", "wget", "rbenv", "ruby-build", "vim", "jshon", "openssl", "readline", "macvim" ]
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")
