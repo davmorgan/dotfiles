@@ -127,7 +127,7 @@ def install_homebrew
 end
 
 def install_packages
-pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "task", "tmux", "git", "spark", "source-highlight", "mobile-shell", "fping", "nmap", "wget", "rbenv", "ruby-build", "vim", "jshon", "openssl", "readline", "macvim" ]
+pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "tmux", "git", "spark", "mobile-shell", "fping", "nmap", "wget", "rbenv", "ruby-build", "vim", "jshon", "openssl", "readline", "macvim" ]
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")
