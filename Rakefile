@@ -5,6 +5,7 @@ task :default => [:install]
 desc "Install Dotfiles"
 task :install => :pull do
   Rake::Task['install:packages'].invoke
+  Rake::Task['install:pygments'].invoke
   Rake::Task['install:fonts'].invoke
   Rake::Task['setup:gitconfig'].invoke
   Rake::Task['setup:tmprop'].invoke
@@ -96,6 +97,11 @@ namespace :install do
     install_packages if RUBY_PLATFORM.downcase.include?("darwin")
   end
 
+  desc "Install Pygments Highlighter"
+  task :pygments do
+    install_pygments
+  end
+
   desc "Install Fonts"
   task :fonts do
     install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
@@ -137,6 +143,11 @@ pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "tmux", "git", 
       run %{ brew install #{p} }
     end
   end
+end
+
+def install_pygments
+  run %{ sudo easy_install pip }
+  run %{ sudo pip install pygments }
 end
 
 def install_fonts
