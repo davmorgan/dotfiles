@@ -23,6 +23,9 @@ alias nx='ssh -ladmin'
 alias ns='netstat -lant'
 alias listen='netstat -lant | grep LISTEN'
 
+# Whats My IP?
+alias extip='curl ipecho.net/plain ; echo'
+
 # Cisco Console using only Screen
 alias con='screen /dev/tty.KeySerial1'
 
