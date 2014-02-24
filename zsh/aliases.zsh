@@ -26,8 +26,11 @@ alias listen='netstat -lant | grep LISTEN'
 # Whats My IP?
 alias extip='curl ipecho.net/plain ; echo'
 
-# Cisco Console using only Screen
+# KeySpan Console using only Screen
 alias con='screen /dev/tty.KeySerial1'
+
+# Cisco USB Console using only Screen
+alias ccon="screen /dev/tty.usbmodem1421"
 
 # PS Aliases
 alias psa="ps aux"
