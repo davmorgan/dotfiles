@@ -17,6 +17,7 @@ TM_GIT          = "/usr/local/bin/git"
 TM_RUBY         = "/Users/USER_RUBY/.rbenv/shims/ruby"
 RBENV_VERSION   = "2.0.0-p353"
 PATH            = "/Users/USER_PATH/.rbenv/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+TM_STRIP_WHITESPACE_ON_SAVE = true
 
 # ---------------------------------------------------------
 # General Settings
