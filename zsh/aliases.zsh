@@ -23,9 +23,6 @@ alias nx='ssh -ladmin'
 alias ns='netstat -lant'
 alias listen='netstat -lant | grep LISTEN'
 
-# Common Network Aliases
-alias dnsip='dig myip.opendns.com @resolver1.opendns.com +short'
-
 # Cisco Console using only Screen
 alias con='screen /dev/tty.KeySerial1'
 
