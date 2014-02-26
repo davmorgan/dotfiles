@@ -9,4 +9,5 @@ TAGS
 .vim/.netrwhist
 .vim/.vim
 bin/bin
+bin/gu
 cache/*
