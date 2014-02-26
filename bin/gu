@@ -1,5 +1,0 @@
-#!/bin/zsh
-
-echo -e "[user]" >> .git/config
-echo -e "\tname = Ronald Valente" >> .git/config
-echo -e "\temail = rovalent@cisco.com" >> .git/config
