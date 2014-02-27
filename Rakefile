@@ -6,6 +6,7 @@ desc "Install Dotfiles"
 task :install => :pull do
   Rake::Task['install:packages'].invoke
   Rake::Task['install:pygments'].invoke
+  Rake::Task['install:nodepkgs'].invoke
   Rake::Task['install:fonts'].invoke
   Rake::Task['setup:gitconfig'].invoke
   Rake::Task['setup:tmprop'].invoke
@@ -102,6 +103,11 @@ namespace :install do
     install_pygments
   end
 
+  desc "Install Node Packages"
+  task :nodepkgs do
+    install_nodepkgs
+  end
+
   desc "Install Fonts"
   task :fonts do
     install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
@@ -133,7 +139,7 @@ def install_homebrew
 end
 
 def install_packages
-pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "tmux", "git", "spark", "mobile-shell", "fping", "nmap", "wget", "rbenv", "ruby-build", "vim", "jshon", "openssl", "readline", "macvim" ]
+pkgs = [ "ack", "asciidoc", "fop", "bash-completion", "libyaml", "tmux", 'node', "git", "spark", "mobile-shell", "fping", "nmap", "wget", "rbenv", "ruby-build", "vim", "jshon", "openssl", "readline", "macvim" ]
 
   pkgs.each do |p|
     if system("brew list | grep #{p} > /dev/null")
@@ -148,6 +154,10 @@ end
 def install_pygments
   run %{ sudo easy_install pip }
   run %{ sudo pip install pygments }
+end
+
+def install_nodepkgs
+  run %{ sudo npm install -g grunt-cli grunt bower yo}
 end
 
 def install_fonts
