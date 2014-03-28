@@ -11,3 +11,4 @@ TAGS
 bin/bin
 bin/gu
 cache/*
+bin/hugo*
