@@ -5,7 +5,7 @@
 #
 DOTFILES="$HOME/.dotfiles"
 BREW='/usr/local/bin/brew'
-PKGS=( spark asciidoc fop wget fping nmap vim jshon rbenv ruby-build git zsh ctags )
+PKGS=( spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh )
 VUNDLE_DIR="$HOME/.vim/bundle/vundle"
 
 #
