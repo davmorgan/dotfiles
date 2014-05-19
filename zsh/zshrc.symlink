@@ -61,3 +61,7 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 ##
 # AsciiDoc Environment Setup
 export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
+
+##
+# iTerm2 Integration
+source /Users/rovalent/.iterm2_shell_integration.zsh
