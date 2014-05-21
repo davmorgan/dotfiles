@@ -1,38 +1,115 @@
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible
+set background=dark
 
-set rtp+=~/.vim/bundle/vundle/
+" The next three lines ensure that vundle works
+filetype off
+set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-""
 " Load Vundle First (REQUIRED!)
 Bundle 'gmarik/vundle'
-
-""
-" Packages
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'tpope/vim-fugitive'
-Bundle 'rodjek/vim-puppet'
-Bundle 'PProvost/vim-ps1'
-Bundle 'tpope/vim-markdown'
+
+" Load Colorschemes
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'desert-warm-256'
+
+" Enable Ack Support
+if executable('ag')
+  Bundle 'mileszs/ack.vim'
+  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+elseif executable('ack-grep')
+  let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+  Bundle 'mileszs/ack.vim'
+elseif executable('ack')
+  Bundle 'mileszs/ack.vim'
+endif
+
+" Key Bundles
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'godlygeek/tabular'
 Bundle 'scrooloose/syntastic'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'desert-warm-256'
+
+" Snippets
 Bundle 'honza/vim-snippets'
+Bundle 'garbas/vim-snipmate'
+if filereadable(expand("~/.vim/bundle/vim-snippets/snippets/support_functions.vim"))
+  source ~/.vim/bundle/vim-snippets/snippets/support_functions.vim
+endif
+
+" Other Awesome Bundles
+Bundle 'kien/ctrlp.vim'
+Bundle 'mhinz/vim-signify'
+Bundle 'tpope/vim-fugitive'
+Bundle 'bling/vim-airline'
+Bundle 'bling/vim-bufferline'
+if executable('ctags')
+  Bundle 'majutsushi/tagbar'
+endif
+
+" Asciidoc Support
 Bundle 'dagwieers/asciidoc-vim'
-Bundle 'chrisbra/color_highlight'
 
-filetype plugin indent on     " required!
+" Puppet Support
+Bundle 'rodjek/vim-puppet'
 
-" Sets how many lines of history VIM has to remember
+" PowerShell Support
+Bundle 'PProvost/vim-ps1'
+
+" Markdown Support
+Bundle 'tpope/vim-markdown'
+
+" Rails Support
+Bundle 'tpope/vim-rails'
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+
+" Required for Proper Function
+filetype plugin indent on
+
+" Initial Configuration
+syntax on
+set t_Co=256
+set autoread
+set mouse=a
+set mousehide
 set history=1000
 
-set autoread
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax enable
+
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+
+if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
+  let g:solarized_termcolors=256
+  colorscheme solarized
+endif
+
+" GUI options that need to be set here first
+" Remove exta, useless button bar.
+set guioptions-=T
+set guioptions+=t
+
+" Encording Setup
+set encoding=utf8
+set ffs=unix,dos,mac
+
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+
+let mapleader = ","
+nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -89,29 +166,7 @@ set novisualbell
 set t_vb=
 set tm=500
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable
-set t_Co=256
-colorscheme desert-warm-256
-
-" GUI options that need to be set here first
-" Remove exta, useless button bar.
-set guioptions-=T
-set guioptions+=t
-
-" Encording Setup
-set encoding=utf8
-set ffs=unix,dos,mac
-
-" Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
-
-let mapleader = ","
-nmap <leader>v :tabedit $MYVIMRC<CR>
+set cursorline
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -142,14 +197,17 @@ map 0 ^
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_quiet_messages = {'level': 'warnings'}
+if has('statusline')
+  set laststatus=2
+
+  " Broken down into easily includeable segments
+  set statusline=%<%f\                     " Filename
+  set statusline+=%w%h%m%r                 " Options
+  set statusline+=%{fugitive#statusline()} " Git Hotness
+  set statusline+=\ [%{&ff}/%Y]            " Filetype
+  set statusline+=\ [%{getcwd()}]          " Current dir
+  set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+endif
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -178,14 +236,6 @@ function! ToggleVExplorer()
   endif
 endfunction
 map <silent> <C-E> :call ToggleVExplorer()<CR>
-
-" Hit enter in the file browser to open the selected
-" file with :vsplit to the right of the browser.
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-
-" Default to tree mode
-let g:netrw_liststyle=3
 
 " Change directory to the current buffer when opening files.
 set autochdir
