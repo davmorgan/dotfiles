@@ -21,7 +21,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'scrooloose/syntastic'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
+Bundle 'rking/ag.vim'
 Bundle 'desert-warm-256'
 Bundle 'honza/vim-snippets'
 Bundle 'dagwieers/asciidoc-vim'
@@ -39,6 +39,9 @@ set autoread
 let mapleader = ","
 let g:mapleader = ","
 nnoremap ; :
+
+" Use Ag for Searching
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Fast saving
 nmap <leader>w :w!<cr>
