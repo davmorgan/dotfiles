@@ -67,6 +67,10 @@ let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 
+" Searching Support
+Bundle 'rking/ag.vim'
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 " Required for Proper Function
 filetype plugin indent on
 
@@ -116,6 +120,9 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 let mapleader = ","
 let g:mapleader = ","
 nnoremap ; :
+
+" Use Ag for Searching
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Fast saving
 nmap <leader>w :w!<cr>
