@@ -3,7 +3,10 @@
 set -e
 setopt extendedglob
 
-vmrun stop *.vmx
+if [ -d *.vmx.lck ]; then
+  echo "First Turn Off the VM"
+  exit 1
+fi
 
 # verify we're in a vmware vm directory
 pwd | grep vmwarevm > /dev/null 2>&1
