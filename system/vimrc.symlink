@@ -1,80 +1,38 @@
-set nocompatible
-set background=dark
-
-" The next three lines ensure that vundle works
-filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-
-" Load Vundle First (REQUIRED!)
-Bundle 'gmarik/vundle'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-
-" Load Colorschemes
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'desert-warm-256'
-
-" Enable Ack Support
-if executable('ag')
-  Bundle 'mileszs/ack.vim'
-  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
-elseif executable('ack-grep')
-  let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-  Bundle 'mileszs/ack.vim'
-elseif executable('ack')
-  Bundle 'mileszs/ack.vim'
+if has('vim_starting')
+	set nocompatible
+	set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-" Key Bundles
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'godlygeek/tabular'
-Bundle 'scrooloose/syntastic'
+" Required Setup
+call neobundle#begin(expand('~/.vim/bundle'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'tomtom/tlib_vim'
 
-" Snippets
-Bundle 'honza/vim-snippets'
-Bundle 'garbas/vim-snipmate'
-if filereadable(expand("~/.vim/bundle/vim-snippets/snippets/support_functions.vim"))
-  source ~/.vim/bundle/vim-snippets/snippets/support_functions.vim
-endif
+" Install Bundles
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'dagwieers/asciidoc-vim'
+NeoBundle 'rodjek/vim-puppet'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'garbas/vim-snipmate'
 
-" Other Awesome Bundles
-Bundle 'kien/ctrlp.vim'
-Bundle 'mhinz/vim-signify'
-Bundle 'tpope/vim-fugitive'
-Bundle 'bling/vim-airline'
-Bundle 'bling/vim-bufferline'
-if executable('ctags')
-  Bundle 'majutsushi/tagbar'
-endif
+" Required
+call neobundle#end()
 
-" Asciidoc Support
-Bundle 'dagwieers/asciidoc-vim'
-
-" Puppet Support
-Bundle 'rodjek/vim-puppet'
-
-" PowerShell Support
-Bundle 'PProvost/vim-ps1'
-
-" Markdown Support
-Bundle 'tpope/vim-markdown'
-
-" Rails Support
-Bundle 'tpope/vim-rails'
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-
-" Searching Support
-Bundle 'rking/ag.vim'
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
-" Required for Proper Function
+" Required
 filetype plugin indent on
 
-" Initial Configuration
+" Check If We Need Any Bundles
+NeoBundleCheck
+
+" Basic Configuration
 syntax on
 set t_Co=256
 set autoread
@@ -82,62 +40,25 @@ set mouse=a
 set mousehide
 set history=1000
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syntax enable
-
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
-
-if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-  let g:solarized_termcolors=256
-  colorscheme solarized
-endif
-
-" GUI options that need to be set here first
-" Remove exta, useless button bar.
-set guioptions-=T
-set guioptions+=t
-
-" Encording Setup
+" Encoding
 set encoding=utf8
 set ffs=unix,dos,mac
 
-" Source the vimrc file after saving it
-if has("autocmd")
-  autocmd bufwritepost .vimrc source $MYVIMRC
-endif
-
-let mapleader = ","
-nmap <leader>v :tabedit $MYVIMRC<CR>
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
+" Easier Saving
 let mapleader = ","
 let g:mapleader = ","
 nnoremap ; :
-
-" Use Ag for Searching
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
-" Fast saving
 nmap <leader>w :w!<cr>
-
-" Resave with sudo
 cmap w!! w !sudo tee % >/dev/null
 
-" Tab config
+" Tab Config
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
 set smarttab
 
-" Indent Config
+" Indent Settings
 set autoindent
 set smartindent
 set copyindent
@@ -150,9 +71,8 @@ set shiftround
 set showmatch
 set ruler
 
-" Whitespace Config
+" Whitespace
 set backspace=eol,start,indent
-
 set so=7
 set wildmode=longest:full
 set wildignore=*.o,*~,*.pyc,*.DS_Store
@@ -161,23 +81,21 @@ set lazyredraw
 set magic
 set title
 
-" Search Configuration
+" Search
 set ignorecase
 set smartcase
 set hlsearch
 set incsearch
 
-" No annoying sound on errors
+" No Alarms
 set noerrorbells
 set novisualbell
-set t_vb=
+set t_vB=
 set tm=500
 
 set cursorline
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
+" Move Between Windows
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -194,12 +112,6 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -250,3 +162,10 @@ set autochdir
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 autocmd BufWrite *.pp :call DeleteTrailingWS()
+autocmd BufWrite *.rb :call DeleteTrailingWS()
+
+" Allow Editing of MYVIMRC
+autocmd bufwritepost .vimrc source $MYVIMRC
+
+" Pull In Customization Options
+source $HOME/.vimrc.local
