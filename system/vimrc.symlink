@@ -12,7 +12,8 @@ NeoBundle 'tomtom/tlib_vim'
 " Install Bundles
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'flazz/vim-colorschemes'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'genoma/vim-netrw'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'airblade/vim-gitgutter'
@@ -39,6 +40,7 @@ set autoread
 set mouse=a
 set mousehide
 set history=1000
+colorscheme jellybeans
 
 " Encoding
 set encoding=utf8
