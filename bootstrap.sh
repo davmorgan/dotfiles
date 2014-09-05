@@ -6,7 +6,7 @@
 DOTFILES="$HOME/.dotfiles"
 BREW='/usr/local/bin/brew'
 PKGS=( spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig )
-VUNDLE_DIR="$HOME/.vim/bundle/vundle"
+BUNDLE_DIR="$HOME/.vim/bundle"
 
 #
 # Pre Script Logic
@@ -109,21 +109,14 @@ link_dir() {
   return $?
 }
 
-vundle() {
-  echo "\n === [\e[0;37mCloning Vundle\e[0m] ==="
-  if [ ! -d $VUNDLE_DIR ]; then
-    mkdir -p $VUNDLE_DIR
-  fi
+neobundle() {
+	mkdir -p $BUNDLE_DIR
 
-  cd $VUNDLE_DIR && git status
-
-  if [ $? -ne 0 ]; then
-    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-  else
-    git pull
-  fi
-
-  vim +BundleInstall +qall
+	if [ ! -d $BUNDLE_DIR/neobundle.vim ]; then
+		git clone https://github.com/Shougo/neobundle.vim $BUNDLE_DIR/neobundle.vim
+	else
+		git pull
+	fi
 }
 
 fonts() {
@@ -181,8 +174,7 @@ for i in $LINK_DIRS; do
   esac
 done
 
-# Ensure Latest Vundle Packages Installed
-vundle
+neobundle
 
 for i in $PKGS; do
   install $i
