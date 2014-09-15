@@ -53,6 +53,16 @@ nnoremap ; :
 nmap <leader>w :w!<cr>
 cmap w!! w !sudo tee % >/dev/null
 
+" Tabularize Quicker
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+  nmap <Leader>ab :Tabularize /=><CR>
+  vmap <Leader>ab :Tabularize /=><CR>
+endif
+
 " Tab Config
 set tabstop=2
 set softtabstop=2
@@ -64,6 +74,9 @@ set smarttab
 set autoindent
 set smartindent
 set copyindent
+
+" Match Braces
+runtime macros/matchit.vim
 
 " Editor Configs
 set hidden
