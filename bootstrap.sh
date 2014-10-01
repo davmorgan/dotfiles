@@ -5,7 +5,7 @@
 #
 DOTFILES="$HOME/.dotfiles"
 BREW='/usr/local/bin/brew'
-PKGS=( spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig )
+PKGS=( spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig tmux reattach-to-user-namespace )
 BUNDLE_DIR="$HOME/.vim/bundle"
 
 #
