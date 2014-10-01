@@ -129,6 +129,15 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
+" Format GoCode on Save
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
+" Autogenerate ctags on save
+autocmd BufWritePost *.go silent! !ctags -R &
+
+" Recognize Markdown
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
