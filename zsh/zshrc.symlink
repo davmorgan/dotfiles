@@ -63,5 +63,9 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
 
 ##
+# Setup GOROOT
+export GOROOT=`go env GOROOT`
+
+##
 # iTerm2 Integration
 source /Users/rovalent/.iterm2_shell_integration.zsh
