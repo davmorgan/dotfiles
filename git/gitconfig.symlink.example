@@ -12,7 +12,7 @@
 [pack]
   threads = 0
 [core]
-  editor = /usr/bin/vim
+  editor = /usr/local/bin/vim
   compression = 9
   preloadindex = true
   excludesfile = /Users/rovalent/.gitignore
