@@ -23,6 +23,7 @@ NeoBundle 'godlygeek/tabular'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'garbas/vim-snipmate'
+NeoBundle 'Blackrush/vim-gocode'
 
 " Required
 call neobundle#end()
