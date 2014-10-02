@@ -24,6 +24,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'garbas/vim-snipmate'
 NeoBundle 'Blackrush/vim-gocode'
+NeoBundle 'chase/vim-ansible-yaml'
 
 " Required
 call neobundle#end()
