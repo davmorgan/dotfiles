@@ -25,6 +25,8 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'garbas/vim-snipmate'
 NeoBundle 'Blackrush/vim-gocode'
 NeoBundle 'chase/vim-ansible-yaml'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'itspriddle/vim-marked'
 
 " Required
 call neobundle#end()
@@ -138,6 +140,11 @@ autocmd BufWritePost *.go silent! !ctags -R &
 
 " Recognize Markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+" Start NERDtree on boot
+autocmd vimenter * NERDTree
+
+let g:marked_app = "Marked 2"
 
 """"""""""""""""""""""""""""""
 " => Status line
