@@ -1,5 +1,9 @@
 # Setup EDITOR/VISUAL/PAGER
-export EDITOR='/usr/bin/vim'
+if [ -f /usr/local/bin/vim ]; then
+  export EDITOR='/usr/local/bin/vim'
+else
+  export EDITOR='/usr/bin/vim'
+fi
 export VISUAL=$EDITOR
 export PAGER='less -m'
 
