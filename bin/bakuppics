@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-/usr/bin/rsync -avz --delete /Volumes/Bolt/Pictures/ /Volumes/Pictures/
+/usr/bin/sudo /usr/bin/rsync -avzh --progress --stats --delete /Volumes/Bolt/Pictures/ /Volumes/Pictures/
