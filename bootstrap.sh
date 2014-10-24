@@ -5,7 +5,7 @@
 #
 DOTFILES="$HOME/.dotfiles"
 BREW='/usr/local/bin/brew'
-PKGS=( hg ansible docker boot2docker ctags spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig tmux reattach-to-user-namespace )
+PKGS=( hg ansible ctags docker ack spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig tmux reattach-to-user-namespace )
 BUNDLE_DIR="$HOME/.vim/bundle"
 
 #
@@ -33,6 +33,11 @@ fi
 # Check for Homebrew, Install if not.
 if [ ! -f $BREW ]; then
   ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+fi
+
+# Now that Homebrew is installed, install cask
+if [ ! -f $CASK ]; then
+  brew install caskroom/cask/brew-cask
 fi
 
 #

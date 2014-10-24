@@ -68,7 +68,3 @@ export GOROOT=`go env GOROOT`
 
 # Setup Docker
 export DOCKER_HOST=tcp://localhost:2375
-
-##
-# iTerm2 Integration
-source /Users/rovalent/.iterm2_shell_integration.zsh
