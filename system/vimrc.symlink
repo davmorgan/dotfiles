@@ -26,6 +26,7 @@ NeoBundle 'garbas/vim-snipmate'
 NeoBundle 'Blackrush/vim-gocode'
 NeoBundle 'chase/vim-ansible-yaml'
 NeoBundle 'itspriddle/vim-marked'
+NeoBundle 'tpope/vim-vinegar'
 
 " Required
 call neobundle#end()
