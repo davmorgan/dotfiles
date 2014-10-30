@@ -27,6 +27,8 @@ NeoBundle 'Blackrush/vim-gocode'
 NeoBundle 'chase/vim-ansible-yaml'
 NeoBundle 'itspriddle/vim-marked'
 NeoBundle 'tpope/vim-vinegar'
+NeoBundle 'ngmy/vim-rubocop'
+NeoBundle 'mileszs/ack.vim'
 
 " Required
 call neobundle#end()
@@ -65,6 +67,8 @@ if exists(":Tabularize")
   vmap <Leader>a: :Tabularize /:\zs<CR>
   nmap <Leader>ab :Tabularize /=><CR>
   vmap <Leader>ab :Tabularize /=><CR>
+  nmap <Leader>a' :Tabularize '=<CR>
+  vmap <Leader>a' :Tabularize '=<CR>
 endif
 
 " Tab Config
