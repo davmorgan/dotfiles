@@ -2,6 +2,7 @@ set -g utf8
 set-window-option -g utf8 on
 set -g default-terminal "screen-256color"
 set -g history-limit 10000
+set-option -g default-command "reattach-to-user-namespace -l zsh"
 
 # reload ~/.tmux.conf using PREFIX r
 bind r source-file ~/.tmux.conf \; display "Reloaded!"
