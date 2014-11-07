@@ -54,3 +54,6 @@ alias s2='/Applications/Sublime\ Text 2.app/Contents/SharedSupport/bin/subl'
 
 # Razor Aliases
 alias ra='razor -u calo-rtp-razor:8080/api'
+
+# Ansible Aliases
+alias av='ansible-vault edit'
