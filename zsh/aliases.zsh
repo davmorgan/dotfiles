@@ -57,3 +57,6 @@ alias ra='razor -u calo-rtp-razor:8080/api'
 
 # Ansible Aliases
 alias av='ansible-vault edit'
+
+# Homebrew
+alias brewu='brew update && brew upgrade && brew cleanup && brew prune && brew doctor'
