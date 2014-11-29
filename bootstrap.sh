@@ -5,7 +5,8 @@
 #
 DOTFILES="$HOME/.dotfiles"
 BREW='/usr/local/bin/brew'
-PKGS=( python hg ansible ctags docker ack spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig tmux reattach-to-user-namespace )
+PKGS=( macvim python hg ansible ctags docker ack spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig tmux reattach-to-user-namespace )
+CASKS=( packer vagrant iterm2 docker vagrant-manager )
 BUNDLE_DIR="$HOME/.vim/bundle"
 
 #
@@ -55,6 +56,10 @@ osx_defaults() {
 
 install() {
   $BREW install $1
+}
+
+caskinstall() {
+  $BREW cask install $1
 }
 
 pull() {
@@ -183,4 +188,8 @@ neobundle
 
 for i in $PKGS; do
   install $i
+done
+
+for i in $CASKS; do
+  caskinstall $i
 done
