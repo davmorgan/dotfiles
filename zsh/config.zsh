@@ -12,8 +12,6 @@ export GREP_COLOR='1;33'
 export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=true
 
-export DYLD_LIBRARY_PATH=/opt/oracle/instantclient_11_2
-
 # No Core Dumps for me
 ulimit -c 0
 
