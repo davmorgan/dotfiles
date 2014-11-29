@@ -6,7 +6,7 @@
 DOTFILES="$HOME/.dotfiles"
 BREW='/usr/local/bin/brew'
 PKGS=( macvim python hg ansible ctags docker ack spark asciidoc graphviz fop wget fping nmap vim jshon rbenv ruby-build git zsh ag sysdig tmux reattach-to-user-namespace )
-CASKS=( packer vagrant iterm2 docker vagrant-manager )
+CASKS=( xquartz transmit google-chrome packer vagrant iterm2 docker vagrant-manager )
 BUNDLE_DIR="$HOME/.vim/bundle"
 
 #
