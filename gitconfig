@@ -1,9 +1,5 @@
 [hub]
   protocol = https
-[user]
-  name = GIT_AUTHOR_NAME
-  email = GIT_AUTHOR_EMAIL
-  helper = osxkeychain
 [color]
   status = auto
   ui = auto
@@ -15,7 +11,6 @@
   editor = /usr/local/bin/vim
   compression = 9
   preloadindex = true
-  excludesfile = /Users/rovalent/.gitignore
 [credential]
   helper = osxkeychain
 [branch]
