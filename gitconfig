@@ -1,36 +1,40 @@
-[hub]
-  protocol = https
-[color]
-  status = auto
-  ui = auto
-  branch = auto
-  diff = auto
-[pack]
-  threads = 0
-[core]
-  editor = /usr/local/bin/vim
-  compression = 9
-  preloadindex = true
-[credential]
-  helper = osxkeychain
-[branch]
-  autosetupmerge = true
 [push]
   default = simple
-[difftool "Kaleidoscope"]
-  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[color]
+  status = auto
+	ui = true
+  branch = auto
+  diff = auto
 [diff]
-  tool = Kaleidoscope
-[difftool]
-  prompt = false
-[mergetool "Kaleidoscope"]
-  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-  trustExitCode = true
-[mergetool]
-  prompt = false
-  keepBackup = false
+  renames = copies
 [merge]
-  tool = Kaleidoscope
+  log = true
+  stat = true
 [alias]
+  aa = add --all
+  ap = add --patch
+  ca = commit --amend
+  ci = commit -v
   co = checkout
-  count   = !git shortlog -sn
+  count = !git shortlog -sn
+  # List contributors with number of commits
+  contributors = shortlog --summary --numbered
+[apply]
+  whitespace = fix
+[core]
+  excludesfile = ~/.gitignore
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+  autocrlf = input
+  compression = 9
+  editor = /usr/bin/vim
+  preloadindex = true
+[commit]
+  template = ~/.gitmessage
+[pack]
+  threads = 0
+[include]
+  path = ~/.gitconfig.local
+[branch]
+  autosetupmerge = true
+[advice]
+  statusHints = false

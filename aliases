@@ -1,0 +1,47 @@
+# vimrc editing
+alias ve='vim ~/.vimrc'
+alias vi='vim'
+
+# /bin/ls aliases
+alias ls='ls -G'
+alias la='ls -aG'
+alias ll='ls -lahG'
+alias lsg='ll | grep'
+alias lh='ls -alt | head'
+
+# Other Common Commands
+alias df='df -h'
+alias du='du -h -d 2'
+alias tf='tail -f'
+alias cl='clear'
+alias cls='clear;ls'
+
+# Netstat
+alias ns='sudo netstat -plant | grep LISTEN'
+
+# PS Aliases
+alias ps="/bin/ps auxf"
+alias psg="/bin/ps aux | grep "
+alias p='ps -fu $USER'
+alias j='jobs -l'
+alias h='history'
+
+# Git Aliases
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gd='git diff'
+alias ga='git add .'
+alias gall='git add -A'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gcv='git commit -v -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gs='git status -sb'
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+
+alias vpn="sudo openconnect -u $(whoami) --config=${HOME}/.openconnect --csd-user=$(whoami) --csd-wrapper=${HOME}/.bin/csd-wrapper.sh https://rtp-vpn-cluster.cisco.com"
+alias rcdnvpn="sudo openconnect -u $(whoami) --config=${HOME}/.openconnect --csd-user=$(whoami) --csd-wrapper=${HOME}/.bin/csd-wrapper.sh https://rcdn-vpn-cluster.cisco.com"
+alias tkyvpn="sudo openconnect -u $(whoami) --config=${HOME}/.openconnect --csd-user=$(whoami) --csd-wrapper=${HOME}/.bin/csd-wrapper.sh https://tky-vpn-cluster.cisco.com"
+alias brewu="brew update && brew upgrade --all && brew doctor && brew cleanup"
+alias latexmk='latexmk -pdf -pvc'
+alias flushdns='sudo killall -HUP mDNSResponder'

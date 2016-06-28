@@ -1,1 +1,1 @@
-EXCLUDES="README.md functions bootstrap.sh zsh"
+EXCLUDES="README.md"

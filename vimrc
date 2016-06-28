@@ -1,65 +1,192 @@
-if has('vim_starting')
-	set nocompatible
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+filetype off                  " required
 
-" Required Setup
-call neobundle#begin(expand('~/.vim/bundle'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'MarcWeber/vim-addon-mw-utils'
-NeoBundle 'tomtom/tlib_vim'
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Install Bundles
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'genoma/vim-netrw'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'dagwieers/asciidoc-vim'
-NeoBundle 'rodjek/vim-puppet'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'garbas/vim-snipmate'
-NeoBundle 'Blackrush/vim-gocode'
-NeoBundle 'chase/vim-ansible-yaml'
-NeoBundle 'itspriddle/vim-marked'
-NeoBundle 'tpope/vim-vinegar'
-NeoBundle 'ngmy/vim-rubocop'
-NeoBundle 'mileszs/ack.vim'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'        " Git Support
+Plugin 'airblade/vim-gitgutter'    " GIT in Sidebar
+Plugin 'tpope/vim-vinegar'         " Just press '-' to go up a directory
+Plugin 'tpope/vim-surround'        " Support for Surrounding brackets
+Plugin 'tpope/vim-eunuch'          " UNIX Sugar for Vim
+Plugin 'tpope/vim-endwise'         " end certain structures automatically
+Plugin 'ctrlpvim/ctrlp.vim'        " Find ANYTHING
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/syntastic'      " Syntax Checking Sugar
+Plugin 'rking/ag.vim'              " Silver Searcher Support
+Plugin 'junegunn/vim-easy-align'   " Well-implemented alignment in Vim
+Plugin 'godlygeek/tabular'         " Line Things Up
+Plugin 'sjl/gundo.vim'             " Powerful Undo
+Plugin 'pearofducks/ansible-vim'   " Ansible 2.0 Support
+Plugin 'fatih/vim-go'              " Best GoLang Support
+Plugin 'nanotech/jellybeans.vim'   " My Favorite Scheme
+Plugin 'Rykka/riv.vim'
 
-" Required
-call neobundle#end()
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-" Required
-filetype plugin indent on
+" ================ General Config ====================
 
-" Check If We Need Any Bundles
-NeoBundleCheck
+set number                      "Line numbers are good
+set backspace=indent,eol,start  "Allow backspace in insert mode
+set history=1000                "Store lots of :cmdline history
+set showcmd                     "Show incomplete cmds down the bottom
+set showmode                    "Show current mode down the bottom
+set gcr=a:blinkon0              "Disable cursor blink
+set visualbell                  "No sounds
+set autoread                    "Reload files changed outside vim
 
-" Basic Configuration
-syntax on
-set t_Co=256
-set autoread
+" This makes vim act like all other editors, buffers can
+" exist in the background without being in a window.
+" http://items.sjbach.com/319/configuring-vim-right
+set hidden
 set mouse=a
 set mousehide
-set history=1000
+
+"turn on syntax highlighting
+syntax on
+
+" Enable ColorScheme
+set t_Co=256
 colorscheme jellybeans
 
-" Encoding
-set encoding=utf8
-set ffs=unix,dos,mac
+" Change leader to a comma because the backslash is too far away
+" That means all \x commands turn into ,x
+" The mapleader has to be set before vundle starts loading all
+" the plugins.
+let mapleader=","
 
-" Easier Saving
-let mapleader = ","
-let g:mapleader = ","
+" =============== Vundle Initialization ===============
+" This loads all the plugins specified in ~/.vim/vundles.vim
+" Use Vundle plugin to manage all other plugins
+if filereadable(expand("~/.vim/vundles.vim"))
+  source ~/.vim/vundles.vim
+endif
+
+" ================ Turn Off Swap Files ==============
+
+set noswapfile
+set nobackup
+set nowb
+
+" ================ Persistent Undo ==================
+" Keep undo history across sessions, by storing in file.
+" Only works all the time.
+if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
+  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  set undodir=~/.vim/backups
+  set undofile
+endif
+
+" ================ Indentation ======================
+
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
+
+" Auto indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+
+filetype plugin on
+filetype indent on
+
+" Display tabs and trailing spaces visually
+set list listchars=tab:\ \ ,trail:·
+
+set nowrap       "Don't wrap lines
+set linebreak    "Wrap lines at convenient points
+
+" ================ Completion =======================
+
+set wildmode=list:longest
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+
+"
+" ================ Scrolling ========================
+
+set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
+
+" ================ Search ===========================
+
+set incsearch       " Find the next match as we type the search
+set hlsearch        " Highlight searches by default
+set ignorecase      " Ignore case when searching...
+set smartcase       " ...unless we type a capital
+
+" ================ Easier Saving ====================
+
 nnoremap ; :
 nmap <leader>w :w!<cr>
 cmap w!! w !sudo tee % >/dev/null
 
-" Tabularize Quicker
+" ======== Remember Last Edit Position Saving =======
+
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
+" ======= Whitespace Management for Most Files ======
+
+" Highlight trailing whitespace
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
+
+" Autoremove trailing spaces when saving the buffer
+autocmd FileType c,cpp,elixir,eruby,html,java,javascript,php,ruby autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+" Highlight too-long lines
+autocmd BufRead,InsertEnter,InsertLeave * 2match LineLengthError /\%126v.*/
+highlight LineLengthError ctermbg=black guibg=black
+autocmd ColorScheme * highlight LineLengthError ctermbg=black guibg=black
+
+" Set up highlight group & retain through colorscheme changes
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+
+" ================= Visual shifting =================
+
+vnoremap < <gv
+vnoremap > >gv
+
+" Status
+"set laststatus=2
+"set statusline=
+"set statusline+=%<\                       " cut at start
+"set statusline+=%2*[%n%H%M%R%W]%*\        " buffer number, and flags
+"set statusline+=%-40f\                    " relative path
+"set statusline+=%=                        " seperate between right- and left-aligned
+"set statusline+=%1*%y%*%*\                " file type
+"set statusline+=%10(L(%l/%L)%)\           " line
+"set statusline+=%2(C(%v/125)%)\           " column
+"set statusline+=%P                        " percentage of file
+
+" ================== Tabularize ======================
+
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
   vmap <Leader>a= :Tabularize /=<CR>
@@ -71,85 +198,11 @@ if exists(":Tabularize")
   vmap <Leader>a' :Tabularize '=<CR>
 endif
 
-" Tab Config
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-set smarttab
+" ================== Status Line =====================
 
-" Indent Settings
-set autoindent
-set smartindent
-set copyindent
-
-" Match Braces
-runtime macros/matchit.vim
-
-" Editor Configs
-set hidden
-set nowrap
-set number
-set shiftround
-set showmatch
-set ruler
-
-" Whitespace
-set backspace=eol,start,indent
-set so=7
-set wildmode=longest:full
-set wildignore=*.o,*~,*.pyc,*.DS_Store
-set wildmenu
-set lazyredraw
-set magic
-set title
-
-" Search
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
-
-" No Alarms
-set noerrorbells
-set novisualbell
-set t_vB=
-set tm=500
-
-set cursorline
-
-" Move Between Windows
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" Return to last edit position when opening files (You want this!)
-autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
-
-" Format GoCode on Save
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
-
-" Autogenerate ctags on save
-autocmd BufWritePost *.go silent! !ctags -R &
-
-" Recognize Markdown
-autocmd BufRead,BufNewFile *.md set filetype=markdown
-
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
 if has('statusline')
   set laststatus=2
+	set statusline=
 
   " Broken down into easily includeable segments
   set statusline=%<%f\                     " Filename
@@ -159,42 +212,35 @@ if has('statusline')
   set statusline+=\ [%{getcwd()}]          " Current dir
   set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
+" ============= First Line of Git Commit ============
 
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-" Toggle Vexplore with Ctrl-E
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-      let expl_win_num = bufwinnr(t:expl_buf_num)
-      if expl_win_num != -1
-          let cur_win_nr = winnr()
-          exec expl_win_num . 'wincmd w'
-          close
-          exec cur_win_nr . 'wincmd w'
-          unlet t:expl_buf_num
-      else
-          unlet t:expl_buf_num
-      endif
-  else
-      exec '1wincmd w'
-      Vexplore
-      let t:expl_buf_num = bufnr("%")
-  endif
-endfunction
-map <silent> <C-E> :call ToggleVExplorer()<CR>
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
 
-" Change directory to the current buffer when opening files.
-set autochdir
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
-autocmd BufWrite * :call DeleteTrailingWS()
+" Setup GoLang
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
 
-" Allow Editing of MYVIMRC
-autocmd bufwritepost .vimrc source $MYVIMRC
+" Go Def config
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
 
-" Pull In Customization Options
-source $HOME/.vimrc.local
+" Open Goodc
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+
+" Interfaces
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+" vim:set ft=vim et sw=2:
