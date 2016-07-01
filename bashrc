@@ -32,7 +32,7 @@ prompt () {
 
 PROMPT_COMMAND=prompt
 
-source $HOME/.bash_aliases
+source $HOME/.aliases
 
 # GoLang Support
 export GOPATH=$HOME/golang
