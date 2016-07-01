@@ -39,9 +39,6 @@ alias gb='git branch'
 alias gs='git status -sb'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 
-alias vpn="sudo openconnect -u $(whoami) --config=${HOME}/.openconnect --csd-user=$(whoami) --csd-wrapper=${HOME}/.bin/csd-wrapper.sh https://rtp-vpn-cluster.cisco.com"
-alias rcdnvpn="sudo openconnect -u $(whoami) --config=${HOME}/.openconnect --csd-user=$(whoami) --csd-wrapper=${HOME}/.bin/csd-wrapper.sh https://rcdn-vpn-cluster.cisco.com"
-alias tkyvpn="sudo openconnect -u $(whoami) --config=${HOME}/.openconnect --csd-user=$(whoami) --csd-wrapper=${HOME}/.bin/csd-wrapper.sh https://tky-vpn-cluster.cisco.com"
 alias brewu="brew update && brew upgrade --all && brew doctor && brew cleanup"
 alias latexmk='latexmk -pdf -pvc'
 alias flushdns='sudo killall -HUP mDNSResponder'
