@@ -1,6 +1,6 @@
 # ~/.zshrc
 #
-# Global Order: zshenv, zprofile, zshrc
+# Global Order: zshenv > [zprofile] > zshrc > [zlogin]
 
 ## History -------------------------------------------------------------------
 
@@ -115,5 +115,8 @@ fi
 ## Syntax Highlight ----------------------------------------------------------
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Local config
+## Aliases -------------------------------------------------------------------
+source $HOME/.aliases
+
+## Local config --------------------------------------------------------------
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

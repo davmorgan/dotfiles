@@ -1,6 +1,6 @@
 # ~/.zshenv
 #
-# Global Order: zshenv, zprofile, zshrc
+# Global Order: zshenv > [zprofile] > zshrc > [zlogin]
 
 # Use Vim as VISUAL and EDITOR
 export PAGER='less -m'
