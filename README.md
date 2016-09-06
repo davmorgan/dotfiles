@@ -3,22 +3,22 @@ This repository is for my dotfiles. Feel free to pull and customize as you wish.
 
 ## Installation
 
-I use RCUP for symlinking the dotfiles to their respective locations.
+I am now using Ansible to manage all of this.
 
 ```sh
-brew tap thoughtbot/formulae
-brew install rcm
+brew install ansible
 
-# Also install bash from this century
-brew install bash bash-completion
+# Also install zsh because its better than all the things.
+brew install zsh
 
-echo "/usr/local/bin/bash" | sudo tee -a /etc/shells
+echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
 ```
 
-Now once RCUP is installed, clone the repo down to `.dotfiles` and run rcup.
+Clone the repo and run the bootstrap script.
 
 ```sh
 cd $HOME
 git clone https://github.com/rvalente/dotfiles.git .dotfiles
-rcup
+cd .dotfiles
+./run.sh
 ```

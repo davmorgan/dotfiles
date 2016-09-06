@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  tasks:
+    - name: deploy dotfiles
+      file: src="~/.dotfiles/files/{{ item }}" dest="~/.{{ item }}" state=link
+      with_items:
+        - vimrc
+        - aliases
+        - gitconfig
+        - gitignore
+        - gitmessage
+        - zshrc
+
+
+    - name: Pull down git completion
+      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="~/{{ item }}"
+      with_items:
+        - git-completion.zsh
+        - git-completion.bash
+        - git-prompt.sh

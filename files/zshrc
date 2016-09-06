@@ -1,0 +1,9 @@
+HISTFILE=~/.zhistory
+HISTSIZE=10000
+SAVEHIST=10000
+bindkey -v
+
+zstyle :compinstall filename '/Users/rovalent/.zshrc'
+
+autoload -Uz compinit
+compinit
