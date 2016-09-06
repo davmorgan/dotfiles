@@ -1,0 +1,52 @@
+# ~/.zshenv
+#
+# Global Order: zshenv, zprofile, zshrc
+
+# Use Vim as VISUAL and EDITOR
+export PAGER='less -m'
+export EDITOR='subl -w'
+export VISUAL=$EDITOR
+
+# ensure dotfiles bin directory is loaded first
+export PATH="$HOME/bin:$PATH"
+
+# Is LaTeX Installed?
+if [ -d /usr/texbin ]; then
+  export PATH=/usr/texbin:$PATH
+fi
+
+# Do we have Homebrew
+if [ -d /usr/local/bin ]; then
+  export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+fi
+
+# Is Go Installed? (You know... that Google Language)
+if [ -d /usr/local/go/bin ]; then
+  export PATH=/usr/local/go/bin:$PATH
+fi
+
+# Do we have hub?
+if [ -d /opt/hub ]; then
+  export PATH=/opt/hub:$PATH
+fi
+
+# OVF Tool Location on Mac
+if [ -d /Applications/VMware\ OVF\ Tool ]; then
+  export PATH=/Applications/VMware\ OVF\ Tool:$PATH
+fi
+
+# Do we have Chruby?
+if [ -d /usr/local/share/chruby ]; then
+  source /usr/local/share/chruby/chruby.sh
+  source /usr/local/share/chruby/auto.sh
+  chruby 2.3.1
+fi
+
+# Give Us Go Commands!
+if (( $+commands[go] )); then
+  export GOPATH=$HOME/go
+  export PATH=$GOPATH/bin:$PATH
+fi
+
+# Local config
+[[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
