@@ -100,8 +100,9 @@ zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*'   force-list always
 
 ## Prompt --------------------------------------------------------------------
-source ~/git-prompt.sh
-precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
+#source ~/git-prompt.sh
+#precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
+source .dotfiles/zsh/prompt.zsh
 
 ## cdpath --------------------------------------------------------------------
 
