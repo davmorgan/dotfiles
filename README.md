@@ -42,6 +42,13 @@ cd .dotfiles
 
 ## ZSH Dotfile Overview
 
-* `.zshenv` is always sourced, add exported variables that should be available to other programs. IE: $PATH, $EDITOR, $PAGER.
+* `.zshenv` is always sourced, add exported variables here.
+* `.zshrc` is for **interactive** shells only.
 
-* `.zshrc` is for **interactive** shells only. You set options for the interactive shell there with the setopt and unsetopt commands. You can also load shell modules, set your history options, change your prompt, set up zle and completion, et cetera. You also set any variables that are only used in the interactive shell (e.g. $LS_COLORS).
+### Load Order
+
+```
+.zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login]
+```
+
+Credit: http://unix.stackexchange.com/a/71258
