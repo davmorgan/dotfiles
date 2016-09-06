@@ -1,16 +1,33 @@
 # Minimal Bash Dotfiles for Mac
+
 This repository is for my dotfiles. Feel free to pull and customize as you wish. Pull requests are welcome also!
+
+## Prerequisites
+
+My dotfiles assume that you have [Homebrew](http://brew.sh/) installed. If you do not, then please install that right away.
+
+```sh
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+Once installed you can proceed with the installation/setup of the dotfiles.
 
 ## Installation
 
-I am now using Ansible to manage all of this.
+Ansible is used to put all the things in their right place. If you do not have ansible, go ahead and install it. You can do that a multitude of ways. For details head over to the [Ansible Installation](http://docs.ansible.com/ansible/intro_installation.html) page.
 
 ```sh
+# Easy: use Homebrew to install the latest stable package.
 brew install ansible
 
-# Also install zsh because its better than all the things.
-brew install zsh
+# Medium: use Python/Pip to install Ansible.
+brew install python
+pip install -U ansible
 
+# Also install zsh because its better than all the things.
+brew install zsh zsh-syntax-highlighting zsh-completions
+
+# Now ensure your Mac is configured to use the new shell.
 echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
 ```
 
@@ -27,10 +44,4 @@ cd .dotfiles
 
 * `.zshenv` is always sourced, add exported variables that should be available to other programs. IE: $PATH, $EDITOR, $PAGER.
 
-
-* `.zshrc` is for interactive shell configuration. You set options for the interactive shell there with the setopt and unsetopt commands. You can also load shell modules, set your history options, change your prompt, set up zle and completion, et cetera. You also set any variables that are only used in the interactive shell (e.g. $LS_COLORS).
-
-
-* `.zprofile` is basically the same as .zlogin except that it's sourced directly before .zshrc is sourced instead of directly after it. According to the zsh documentation, ".zprofile is meant as an alternative to `.zlogin' for ksh fans; the two are not intended to be used together, although this could certainly be done if desired."
-
-* `.zlogout` is sometimes used to clear and reset the terminal.
+* `.zshrc` is for **interactive** shells only. You set options for the interactive shell there with the setopt and unsetopt commands. You can also load shell modules, set your history options, change your prompt, set up zle and completion, et cetera. You also set any variables that are only used in the interactive shell (e.g. $LS_COLORS).
