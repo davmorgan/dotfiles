@@ -3,14 +3,29 @@
 # Global Order: zshenv > [zprofile] > zshrc > [zlogin]
 
 ## History -------------------------------------------------------------------
-
 HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
-## fpath setup ---------------------------------------------------------------
+# shortcut to this dotfiles path is $ZSH
+export ZSH=$HOME/.dotfiles
 
-fpath=(/usr/local/share/zsh-completions ~/.zsh $fpath)
+## fpath setup ---------------------------------------------------------------
+# load our own completion functions
+fpath=(
+  $ZSH/zsh/completion
+  $fpath
+)
+
+# load custom executable functions
+for function in $ZSH/zsh/functions/*; do
+  source $function
+done
+
+## Modules -------------------------------------------------------------------
+autoload -U age
+autoload -U zmv
+zmodload zsh/stat
 
 ## Options -------------------------------------------------------------------
 setopt SHARE_HISTORY        # share history across shells
@@ -45,17 +60,14 @@ unsetopt FLOW_CONTROL       # turn off output flow control (so ^S/^Q work)
 unsetopt MENU_COMPLETE      # do not autoselect the first completion entry
 
 ## Key Bindings --------------------------------------------------------------
-
 bindkey -v
 
 ## Colors --------------------------------------------------------------------
-
 # makes color constants available
 autoload -U colors zsh/terminfo
 colors
 
 ## Completion ----------------------------------------------------------------
-
 zmodload zsh/complist
 unset config_files
 
@@ -100,24 +112,17 @@ zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:killall:*'   force-list always
 
 ## Prompt --------------------------------------------------------------------
-#source ~/git-prompt.sh
-#precmd () { __git_ps1 "%n" ":%~$ " "|%s" }
-source .dotfiles/zsh/prompt.zsh
+source $ZSH/zsh/prompt.zsh
 
 ## cdpath --------------------------------------------------------------------
-
-cdpath=($HOME/code)
+cdpath=(
+  $HOME/code
+)
 
 # Update SSH AGENT
 if [ -f $HOME/.ssh/id_rsa ]; then
   /usr/bin/ssh-add -k $HOME/.ssh/id_rsa 2>/dev/null
 fi
-
-## Syntax Highlight ----------------------------------------------------------
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-## Aliases -------------------------------------------------------------------
-source $HOME/.aliases
 
 ## Local config --------------------------------------------------------------
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

@@ -2,6 +2,24 @@
 - hosts: all
 
   tasks:
+    - name: Install Homebrew Deps
+      homebrew: name="{{ item }}" state=present
+      with_items:
+        - pt
+        - tree
+        - go
+        - fasd
+        - packer
+        - shellcheck
+        - hub
+        - git
+
+    - name: Install Vim with LUA Support
+      homebrew: name="vim" install_options=with-lua state=latest
+
+    - name: Install MacVim with LUA Support
+      homebrew: name="macvim" install_options=with-lua,with-cscope state=latest
+
     - name: deploy dotfiles
       file: src="~/.dotfiles/files/{{ item }}" dest="~/.{{ item }}" state=link
       with_items:
@@ -15,10 +33,22 @@
         - latexmkrc
 
     - name: Setup user dotfile dirs folder
-      file: path="~/{{ item }}" state=directory
+      file: path="~/{{ item }}" recurse=yes state=directory
       with_items:
         - ".zsh"
         - "bin"
+        - ".vim/autoload"
+
+    - name: Install vim-plug
+      get_url: url="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" dest="~/.vim/autoload/plug.vim"
+
+    - name: Install Python Deps
+      pip: name="{{ item }}"
+      with_items:
+        - pep8
+        - docutils
+        - sphinx
+        - sphinx_rtd_theme
 
     - name: Pull down git completion
       get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="~/.zsh/_git"
