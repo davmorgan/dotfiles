@@ -21,6 +21,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'fatih/vim-go'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'Shougo/unite.vim'
+Plug 'chriskempson/base16-vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -47,8 +48,7 @@ set mousehide
 syntax on
 
 " Enable ColorScheme
-set t_Co=256
-colorscheme jellybeans
+colorscheme base16-eighties
 
 " Change leader to a comma because the backslash is too far away
 " That means all \x commands turn into ,x
