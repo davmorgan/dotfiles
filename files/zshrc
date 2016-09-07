@@ -13,7 +13,7 @@ export ZSH=$HOME/.dotfiles
 ## fpath setup ---------------------------------------------------------------
 # load our own completion functions
 fpath=(
-  $ZSH/zsh/completion
+  /usr/local/share/zsh/site-functions
   $fpath
 )
 

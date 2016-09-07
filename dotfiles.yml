@@ -49,19 +49,5 @@
         - sphinx
         - sphinx_rtd_theme
 
-    - name: Pull down git completion
-      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="./zsh/completion/_git"
-      with_items:
-        - git-completion.zsh
-
-    - name: Pull down git completion
-      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="./zsh/completion/{{ item }}"
-      with_items:
-        - git-completion.bash
-        - git-prompt.sh
-
-    - name: hub zsh completion
-      get_url: url="https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion" dest="./zsh/completion/_hub"
-
     - name: Setup Sublime Text 3 link
       file: src="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" dest="~/bin/subl" state=link force=yes
