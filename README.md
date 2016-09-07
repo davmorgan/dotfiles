@@ -20,16 +20,14 @@ Ansible is used to put all the things in their right place. If you do not have a
 # Easy: use Homebrew to install the latest stable package.
 brew install ansible
 
-# Medium: use Python/Pip to install Ansible.
-brew install python
-pip install -U ansible
-
-# Also install zsh because its better than all the things.
-brew install zsh zsh-syntax-highlighting zsh-completions
-
 # Now ensure your Mac is configured to use the new shell.
 echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
+
+# Now set your default shell
+chsh -s /usr/local/bin/zsh
 ```
+
+Note: Open a new terminal before you move on to the next step!
 
 Clone the repo and run the bootstrap script.
 

@@ -1,15 +1,3 @@
 .DS_Store
-.svn
-*~
-*.swp
-*.rbc
-git/gitconfig.symlink
-system/tm_properties.symlink
-TAGS
-.vim/.netrwhist
-.vim/.vim
-bin/bin
-bin/gu
-cache/*
-bin/hugo*
-.vimrc.local
+zsh/completion/git-completion.bash
+zsh/completion/git-prompt.sh

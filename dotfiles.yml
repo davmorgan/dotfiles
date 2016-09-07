@@ -2,37 +2,49 @@
 - hosts: all
 
   tasks:
+    - name: install packages
+      homebrew: name="{{ item }}"
+      with_items:
+        - zsh
+        - pt
+        - vim
+        - go
+        - git
+        - curl
+        - wget
+        - fasd
+        - packer
+        - tree
+        - shellcheck
+
     - name: deploy dotfiles
       file: src="~/.dotfiles/files/{{ item }}" dest="~/.{{ item }}" state=link
       with_items:
         - vimrc
-        - aliases
         - gitconfig
         - gitignore
         - gitmessage
-        - zshrc
         - zshenv
+        - zshrc
         - latexmkrc
 
     - name: Setup user dotfile dirs folder
       file: path="~/{{ item }}" state=directory
       with_items:
-        - ".zsh"
         - "bin"
+        - ".zsh"
 
     - name: Pull down git completion
-      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="~/.zsh/_git"
-      with_items:
-        - git-completion.zsh
-
-    - name: Pull down git completion
-      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="~/{{ item }}"
+      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="./zsh/completion/{{ item }}"
       with_items:
         - git-completion.bash
         - git-prompt.sh
 
-    - name: hub zsh completion
-      get_url: url="https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion" dest="~/.zsh/_hub"
+    - name: git completion
+      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh" dest="./zsh/completion/_git"
+
+    - name: hub completion
+      get_url: url="https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion" dest="./zsh/completion/_hub"
 
     - name: Setup Sublime Text 3 link
       file: src="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" dest="~/bin/subl" state=link force=yes
