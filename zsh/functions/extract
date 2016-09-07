@@ -23,4 +23,8 @@ extract () {
     else
         echo "'$1' is not a valid file"
     fi
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 23fdcf7fc9d6c1d546957449eb673a5792200ff4

@@ -1,36 +1,30 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'        " Git Support
-Plugin 'airblade/vim-gitgutter'    " GIT in Sidebar
-Plugin 'tpope/vim-vinegar'         " Just press '-' to go up a directory
-Plugin 'tpope/vim-surround'        " Support for Surrounding brackets
-Plugin 'tpope/vim-eunuch'          " UNIX Sugar for Vim
-Plugin 'tpope/vim-endwise'         " end certain structures automatically
-Plugin 'ctrlpvim/ctrlp.vim'        " Find ANYTHING
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/syntastic'      " Syntax Checking Sugar
-Plugin 'rking/ag.vim'              " Silver Searcher Support
-Plugin 'junegunn/vim-easy-align'   " Well-implemented alignment in Vim
-Plugin 'godlygeek/tabular'         " Line Things Up
-Plugin 'sjl/gundo.vim'             " Powerful Undo
-Plugin 'pearofducks/ansible-vim'   " Ansible 2.0 Support
-Plugin 'fatih/vim-go'              " Best GoLang Support
-Plugin 'nanotech/jellybeans.vim'   " My Favorite Scheme
-Plugin 'Rykka/riv.vim'
+Plug 'tpope/vim-fugitive'        " Git Support
+Plug 'airblade/vim-gitgutter'    " GIT in Sidebar
+Plug 'tpope/vim-vinegar'         " Just press '-' to go up a directory
+Plug 'tpope/vim-surround'        " Support for Surrounding brackets
+Plug 'tpope/vim-eunuch'          " UNIX Sugar for Vim
+Plug 'tpope/vim-endwise'         " end certain structures automatically
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'scrooloose/syntastic'      " Syntax Checking Sugar
+Plug 'junegunn/vim-easy-align'   " Well-implemented alignment in Vim
+Plug 'godlygeek/tabular'         " Line Things Up
+Plug 'sjl/gundo.vim'             " Powerful Undo
+Plug 'pearofducks/ansible-vim'   " Ansible 2.0 Support
+Plug 'nanotech/jellybeans.vim'   " My Favorite Scheme
+Plug 'Rykka/riv.vim'             " rST Support
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'fatih/vim-go'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'Shougo/unite.vim'
+Plug 'chriskempson/base16-vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Add plugins to &runtimepath
+call plug#end()
 
 " ================ General Config ====================
 
@@ -54,8 +48,7 @@ set mousehide
 syntax on
 
 " Enable ColorScheme
-set t_Co=256
-colorscheme jellybeans
+colorscheme base16-eighties
 
 " Change leader to a comma because the backslash is too far away
 " That means all \x commands turn into ,x
@@ -242,5 +235,15 @@ au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
 au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <Leader>e <Plug>(go-rename)
+
+" ============= Unite PT Support ============
+
+nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+if executable('pt')
+  let g:unite_source_grep_command = 'pt'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_encoding = 'utf-8'
+endif
 
 " vim:set ft=vim et sw=2:

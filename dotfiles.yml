@@ -2,20 +2,25 @@
 - hosts: all
 
   tasks:
-    - name: install packages
-      homebrew: name="{{ item }}"
+    - name: Install Homebrew Deps
+      homebrew: name="{{ item }}" state=present
       with_items:
-        - zsh
         - pt
-        - vim
+        - tree
         - go
+        - fasd
+        - packer
+        - shellcheck
+        - hub
         - git
         - curl
         - wget
-        - fasd
-        - packer
-        - tree
-        - shellcheck
+
+    - name: Install Vim with LUA Support
+      homebrew: name="vim" install_options=with-lua state=latest
+
+    - name: Install MacVim with LUA Support
+      homebrew: name="macvim" install_options=with-lua,with-cscope state=latest
 
     - name: deploy dotfiles
       file: src="~/.dotfiles/files/{{ item }}" dest="~/.{{ item }}" state=link
@@ -29,22 +34,21 @@
         - latexmkrc
 
     - name: Setup user dotfile dirs folder
-      file: path="~/{{ item }}" state=directory
+      file: path="~/{{ item }}" recurse=yes state=directory
       with_items:
         - "bin"
-        - ".zsh"
+        - ".vim/autoload"
 
-    - name: Pull down git completion
-      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/{{ item }}" dest="./zsh/completion/{{ item }}"
+    - name: Install vim-plug
+      get_url: url="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" dest="~/.vim/autoload/plug.vim"
+
+    - name: Install Python Deps
+      pip: name="{{ item }}"
       with_items:
-        - git-completion.bash
-        - git-prompt.sh
-
-    - name: git completion
-      get_url: url="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh" dest="./zsh/completion/_git"
-
-    - name: hub completion
-      get_url: url="https://raw.githubusercontent.com/github/hub/master/etc/hub.zsh_completion" dest="./zsh/completion/_hub"
+        - pep8
+        - docutils
+        - sphinx
+        - sphinx_rtd_theme
 
     - name: Setup Sublime Text 3 link
       file: src="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" dest="~/bin/subl" state=link force=yes

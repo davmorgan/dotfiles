@@ -7,6 +7,26 @@ HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
+# shortcut to this dotfiles path is $ZSH
+export ZSH=$HOME/.dotfiles
+
+## fpath setup ---------------------------------------------------------------
+# load our own completion functions
+fpath=(
+  /usr/local/share/zsh/site-functions
+  $fpath
+)
+
+# load custom executable functions
+for function in $ZSH/zsh/functions/*; do
+  source $function
+done
+
+## Modules -------------------------------------------------------------------
+autoload -U age
+autoload -U zmv
+zmodload zsh/stat
+
 ## Options -------------------------------------------------------------------
 setopt appendhistory        #
 setopt sharehistory         # share history across shells
@@ -31,22 +51,14 @@ unsetopt beep               # No beeps on error
 ## Key Bindings --------------------------------------------------------------
 bindkey -v
 
-## Functions -----------------------------------------------------------------
-fpath=(
-  ~/.zsh
-  $fpath
-)
-
-## Modules -------------------------------------------------------------------
-autoload -U age
-autoload -U zmv
-zmodload zsh/stat
-
+## Colors --------------------------------------------------------------------
+# makes color constants available
 autoload -U colors zsh/terminfo
 colors
 
+## Autoload *.zsh ------------------------------------------------------------
 typeset -U config_files
-config_files=($HOME/.dotfiles/zsh/*.zsh)
+config_files=($ZSH/zsh/*.zsh)
 
 for file in ${config_files}
 do
@@ -54,13 +66,61 @@ do
 done
 
 ## Completion ----------------------------------------------------------------
-zstyle :compinstall filename '/Users/rovalent/.zshrc'
-zstyle ':completion:*:*:git:*'
+zmodload zsh/complist
+unset config_files
 
 autoload -Uz compinit
 compinit
 
-## Aliases -------------------------------------------------------------------
+# Hostname for Completion
+[ -r ~/.ssh/known_hosts ] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
+[ -r /etc/hosts ] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
+hosts=(
+  "$_ssh_hosts[@]"
+  "$_etc_hosts[@]"
+  "$HOST"
+  localhost
+)
+zstyle ':completion:*:hosts' hosts $hosts
 
-source $HOME/.aliases
+# Use caching so that commands like apt and dpkg complete are useable
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path $ZSH/cache
 
+# cd will never select the parent directory
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+zstyle :compinstall filename '${HOME}/.zshrc'
+
+# matches case insensitive for lowercase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
+zstyle ':completion:*' menu select
+
+# Completion for Processes
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
+
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*'   force-list always
+
+zstyle ':completion:*:*:killall:*' menu yes select
+zstyle ':completion:*:killall:*'   force-list always
+
+## Prompt --------------------------------------------------------------------
+source $ZSH/zsh/prompt.zsh
+
+## cdpath --------------------------------------------------------------------
+cdpath=(
+  $HOME/code
+)
+
+# Update SSH AGENT
+if [ -f $HOME/.ssh/id_rsa ]; then
+  /usr/bin/ssh-add -k $HOME/.ssh/id_rsa 2>/dev/null
+fi
+
+## Local config --------------------------------------------------------------
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
